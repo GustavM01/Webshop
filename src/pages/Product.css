@@ -1,42 +1,66 @@
+.product-page-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
 .product-container {
   display: flex;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
   flex-direction: row;
   margin: 50px;
   flex-wrap: wrap;
   gap: 30px;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: fit-content;
+  overflow: hidden;
+}
+
+.product-page-img-wrapper {
+  max-width: 420px;
+  max-height: 420px;
 }
 
 .product-page-img {
-  width: 500px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  /* width: 100%; */
+  max-width: 420px;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  /* border-radius: var(--radius);
+  box-shadow: var(--shadow); */
 }
 
 .product-page-text-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: var(--radius);
-  background: white;
-  box-shadow: var(--shadow);
+  /* background: white; */
+  /* border-radius: var(--radius); */
+  /* box-shadow: var(--shadow); */
   padding: 15px;
   width: 300px;
-}
-
-.product-page-text {
-  /* display: flex; */
+  gap: 5px;
 }
 
 .product-page-name {
+  font-size: 24px;
+  margin: 0 0 5px 0;
 }
 
 .product-page-price {
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
 }
 
 .product-page-description {
+  margin-top: 15px;
+  line-height: 1.5;
+  opacity: 0.8;
 }
 
 .product-page-name,
@@ -45,14 +69,37 @@
 }
 
 .product-page-btn {
-  width: fit-content;
-  padding: 10px;
-  border-radius: 10px;
-  background: var(--bg-secondary);
+  margin-top: 25px;
+  padding: 12px 16px;
+  border-radius: 12px;
+
+  background: var(--accent);
+  color: white;
   border: none;
-  box-shadow: var(--shadow);
+
+  cursor: pointer;
+  transition: 0.2s ease;
+  width: fit-content;
 }
 
 .product-page-btn:hover {
-  background: var(--bg-hover);
+  transform: translateY(-2px);
+  opacity: 0.7;
+}
+
+.product-page-loading {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 880px) {
+  .product-container {
+    width: min-content;
+    margin: 16px;
+    margin-top: 20px;
+  }
+
+  .product-page-text-container {
+    margin-inline: 25px;
+  }
 }
