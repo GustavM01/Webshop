@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { getProducts } from "../services/productService";
 import ProductCard from "../components/ProductCard";
 import "./Home.css";
+import { useProducts } from "../context/ProductContext";
 
 function Home() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    getProducts().then(setProducts);
-  }, []);
+  const { products, loading } = useProducts();
 
   return (
     <>

@@ -14,3 +14,8 @@
   object-fit: cover;
   border-radius: 15px;
 }
+
+.product-link {
+  text-decoration: none;
+  color: black;
+}

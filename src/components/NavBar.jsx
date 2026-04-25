@@ -1,12 +1,15 @@
 import React from "react";
 import "./NavBar.css";
 import { ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function NavBar() {
   return (
     <div className="navbar">
       <div className="nav-container">
-        <div className="logo">WebShop</div>
+        <Link to="/" className="logo">
+          Webshop
+        </Link>
         <div className="cart">
           <div className="cart-items">1</div>
           <ShoppingCart color="gray" strokeWidth={2} />
