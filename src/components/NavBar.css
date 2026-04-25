@@ -23,8 +23,11 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
+  background: var(--bg-secondary);
   cursor: pointer;
+  margin-left: 30px;
+  flex-shrink: 0;
 }
 
 .cart:hover {
@@ -44,12 +47,35 @@
   /* border: 1px solid darkgray; */
   border-radius: 50%;
   background-color: rgb(52, 52, 52);
+  text-decoration: none;
 }
 
 .logo {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
   cursor: pointer;
   text-decoration: none;
-  color: black;
+  margin-right: 20px;
+}
+
+.search-bar {
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 20px;
+  padding-inline: 10px;
+  font-size: medium;
+  width: 100%;
+  flex-shrink: 1;
+  color: var(--text-secondary);
+}
+
+.search-bar:focus {
+  /* border: none; */
+  outline: none;
+}
+
+.navbar-right {
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
 }
