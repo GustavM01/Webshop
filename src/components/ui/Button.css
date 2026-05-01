@@ -5,7 +5,7 @@
   border: none;
 
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: transform 0.2s ease;
   width: fit-content;
 }
 
@@ -22,7 +22,39 @@
   height: fit-content;
 }
 
+.btn-disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: var(--accent);
+  color: white;
+}
+
 .btn:hover {
   transform: translateY(-2px);
   opacity: 0.7;
+}
+
+.loading-btn {
+  margin-left: 30px;
+  opacity: 0.7;
+  height: fit-content;
+  width: fit-content;
+  padding: 7.5px;
+  transform: translateY(-2px);
+}
+
+.loading-icon {
+  animation: spin 0.5s linear infinite;
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

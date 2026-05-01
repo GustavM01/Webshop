@@ -4,20 +4,23 @@ import { useProducts } from "../context/ProductContext";
 import { useCart } from "../context/CartContext";
 import "./Product.css";
 import Button from "../components/ui/Button";
+import { Loader2 } from "lucide-react";
 
 function Product() {
   const { id } = useParams();
   const { products } = useProducts();
-  const { addToCart } = useCart();
+  const { cart, addToCart } = useCart();
 
+  const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState(1);
 
   const numbers = [...Array(11).keys()];
 
   const product = products.find((p) => p.id === id);
 
-  const { cart } = useCart();
   const cartProduct = cart.find((p) => p.id === id);
+
+  const isSame = cartProduct?.quantity === selected;
 
   useEffect(() => {
     if (cartProduct) {
@@ -25,7 +28,29 @@ function Product() {
     }
   }, [cartProduct]);
 
+  useEffect(() => {
+    if (!cartProduct && selected === 0) {
+      setSelected(1);
+      return;
+    }
+  }, [selected]);
+
   if (!product) return <p className="product-page-loading">Loading...</p>;
+
+  const handleAddToCart = () => {
+    if (isSame) return;
+    // if (!cartProduct && selected === 0) {
+    //   setSelected(1);
+    //   return;
+    // }
+
+    setLoading(true);
+    addToCart(product, selected);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
+  };
 
   return (
     <>
@@ -52,8 +77,11 @@ function Product() {
                 </option>
               ))}
             </select>
+            {/* <p>{selected === cartProduct?.quantity && `${selected} in cart`}</p> */}
             <Button
-              onClick={() => addToCart(product, selected)}
+              variant={isSame ? "disabled" : "primary"}
+              loading={loading}
+              onClick={handleAddToCart}
               style={{ marginTop: 25 }}
             >
               {cartProduct ? "Update cart" : "Add to cart"}
