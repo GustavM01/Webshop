@@ -29,7 +29,8 @@
   color: white;
 }
 
-.btn:hover {
+.btn-primary:hover,
+.btn-remove:hover {
   transform: translateY(-2px);
   opacity: 0.7;
 }

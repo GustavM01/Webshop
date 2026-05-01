@@ -92,6 +92,14 @@
   justify-content: center;
 }
 
+.product-page-btn-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 25px;
+  gap: 10px;
+}
+
 @media screen and (max-width: 880px) {
   .product-container {
     width: min-content;

@@ -16,11 +16,9 @@ export function CartProvider({ children }) {
     setCart((prev) => {
       const exists = prev.find((item) => item.id === product.id);
 
-      if (exists) {
-        if (quantity === 0) {
-          return prev.filter((item) => item.id !== product.id);
-        }
+      if (quantity < 1) return prev;
 
+      if (exists) {
         return prev.map((item) =>
           item.id === product.id ? { ...item, quantity: quantity } : item,
         );

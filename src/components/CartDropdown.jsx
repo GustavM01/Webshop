@@ -21,9 +21,10 @@ function CartDropdown() {
             <p>{product.name}</p>
             <p>{product.price} kr</p>
             <p>{product.quantity} st</p>
-            <Button onClick={() => removeFromCart(product.id)} variant="remove">
-              <Trash2 size={20} color="white" strokeWidth={1.8} />
-            </Button>
+            <Button
+              onClick={() => removeFromCart(product.id)}
+              variant="remove"
+            />
           </div>
         ))}
       </div>

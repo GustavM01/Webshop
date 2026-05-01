@@ -9,12 +9,12 @@ import { Loader2 } from "lucide-react";
 function Product() {
   const { id } = useParams();
   const { products } = useProducts();
-  const { cart, addToCart } = useCart();
+  const { cart, addToCart, removeFromCart } = useCart();
 
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState(1);
 
-  const numbers = [...Array(11).keys()];
+  const numbers = Array.from({ length: 10 }, (_, i) => i + 1);
 
   const product = products.find((p) => p.id === id);
 
@@ -28,21 +28,10 @@ function Product() {
     }
   }, [cartProduct]);
 
-  useEffect(() => {
-    if (!cartProduct && selected === 0) {
-      setSelected(1);
-      return;
-    }
-  }, [selected]);
-
   if (!product) return <p className="product-page-loading">Loading...</p>;
 
   const handleAddToCart = () => {
     if (isSame) return;
-    // if (!cartProduct && selected === 0) {
-    //   setSelected(1);
-    //   return;
-    // }
 
     setLoading(true);
     addToCart(product, selected);
@@ -77,15 +66,21 @@ function Product() {
                 </option>
               ))}
             </select>
-            {/* <p>{selected === cartProduct?.quantity && `${selected} in cart`}</p> */}
-            <Button
-              variant={isSame ? "disabled" : "primary"}
-              loading={loading}
-              onClick={handleAddToCart}
-              style={{ marginTop: 25 }}
-            >
-              {cartProduct ? "Update cart" : "Add to cart"}
-            </Button>
+            <div className="product-page-btn-container">
+              <Button
+                variant={isSame ? "disabled" : "primary"}
+                loading={loading}
+                onClick={handleAddToCart}
+              >
+                {cartProduct ? "Update cart" : "Add to cart"}
+              </Button>
+              {cartProduct && (
+                <Button
+                  onClick={() => (removeFromCart(product.id), setSelected(1))}
+                  variant="remove"
+                ></Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
