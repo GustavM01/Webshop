@@ -1,11 +1,13 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
-import "./Cart.css";
 import { Link } from "react-router-dom";
+import "./CartDropdown.css";
 
-function Cart() {
+function CartDropdown() {
   const { cart, clearCart, removeFromCart } = useCart();
   const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <div className="cart-container">
       <div className="cart-list">
@@ -28,9 +30,9 @@ function Cart() {
       </div>
       <div className="cart-summary">
         <p>Totalt: {totalPrice} kr</p>
+        <p>Totalt: {totalItems}</p>
       </div>
     </div>
   );
 }
-
-export default Cart;
+export default CartDropdown;
