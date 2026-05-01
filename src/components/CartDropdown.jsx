@@ -18,10 +18,11 @@ function CartDropdown() {
             <Link className="cart-img" to={`/product/${product.id}`}>
               <img src={product.image} alt={product.name} />
             </Link>
-            <p>{product.name}</p>
+            <p className="cart-item-name">{product.name}</p>
             <p>{product.price} kr</p>
-            <p>{product.quantity} st</p>
+            <p>{product.quantity}</p>
             <Button
+              style={{ marginRight: 10 }}
               onClick={() => removeFromCart(product.id)}
               variant="remove"
             />
@@ -29,8 +30,14 @@ function CartDropdown() {
         ))}
       </div>
       <div className="cart-summary">
-        <p>Totalt: {totalPrice} kr</p>
-        <p>Totalt: {totalItems}</p>
+        <div className="cart-summary-container">
+          <p>Total</p>
+          <p style={{ fontWeight: 700 }}>{totalPrice} kr</p>
+        </div>
+        <div className="cart-summary-container">
+          <p>Total items</p>
+          <p style={{ fontWeight: 700 }}>{totalItems}</p>
+        </div>
         <Button>Go to checkout</Button>
       </div>
     </div>
