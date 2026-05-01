@@ -12,6 +12,8 @@ function NavBar() {
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
 
+  const [shouldScale, setShouldScale] = useState(false);
+
   const location = useLocation();
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -19,6 +21,16 @@ function NavBar() {
   useEffect(() => {
     setIsCartOpen(false);
   }, [location]);
+
+  useEffect(() => {
+    setShouldScale(true);
+
+    const timeout = setTimeout(() => {
+      setShouldScale(false);
+    }, 120);
+
+    return () => clearTimeout(timeout);
+  }, [totalItems]);
 
   useEffect(() => {
     if (!isCartOpen) return;
@@ -51,7 +63,15 @@ function NavBar() {
             onClick={() => setIsCartOpen((prev) => !prev)}
             className="cart"
           >
-            {totalItems != 0 && <div className="cart-items">{totalItems}</div>}
+            {totalItems != 0 && (
+              <div
+                className={
+                  shouldScale ? "cart-items cart-items-scaled" : "cart-items"
+                }
+              >
+                {totalItems}
+              </div>
+            )}
             <ShoppingCart color="var(--text-secondary)" strokeWidth={2} />
           </button>
         </div>
