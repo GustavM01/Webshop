@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useProducts } from "../context/ProductContext";
 import { useCart } from "../context/CartContext";
 import "./Product.css";
+import Button from "../components/ui/Button";
 
 function Product() {
   const { id } = useParams();
@@ -26,12 +27,12 @@ function Product() {
               <p className="product-page-price">{product.price} kr</p>
             </div>
             <p className="product-page-description">{product.description}</p>
-            <button
-              className="product-page-btn"
+            <Button
               onClick={() => addToCart(product)}
+              style={{ marginTop: 25 }}
             >
               Add to cart
-            </button>
+            </Button>
           </div>
         </div>
       </div>

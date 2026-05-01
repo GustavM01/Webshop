@@ -2,6 +2,8 @@ import React from "react";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import "./CartDropdown.css";
+import Button from "./ui/Button";
+import { Trash2 } from "lucide-react";
 
 function CartDropdown() {
   const { cart, clearCart, removeFromCart } = useCart();
@@ -19,18 +21,16 @@ function CartDropdown() {
             <p>{product.name}</p>
             <p>{product.price} kr</p>
             <p>{product.quantity} st</p>
-            <button
-              className="cart-btn"
-              onClick={() => removeFromCart(product.id)}
-            >
-              X
-            </button>
+            <Button onClick={() => removeFromCart(product.id)} variant="remove">
+              <Trash2 size={20} color="white" strokeWidth={1.8} />
+            </Button>
           </div>
         ))}
       </div>
       <div className="cart-summary">
         <p>Totalt: {totalPrice} kr</p>
         <p>Totalt: {totalItems}</p>
+        <Button>Go to checkout</Button>
       </div>
     </div>
   );
