@@ -5,6 +5,7 @@ import { useCart } from "../context/CartContext";
 import "./Product.css";
 import Button from "../components/ui/Button";
 import { Loader2 } from "lucide-react";
+import NumberInput from "../components/ui/NumberInput";
 
 function Product() {
   const { id } = useParams();
@@ -25,6 +26,8 @@ function Product() {
   useEffect(() => {
     if (cartProduct) {
       setSelected(cartProduct.quantity);
+    } else {
+      setSelected(1);
     }
   }, [cartProduct]);
 
@@ -55,17 +58,11 @@ function Product() {
             </div>
             <p className="product-page-description">{product.description}</p>
 
-            <select
+            <NumberInput
               value={selected}
-              onChange={(e) => setSelected(+e.target.value)}
-              style={{ width: "fit-content" }}
-            >
-              {numbers.map((num) => (
-                <option key={num} value={num}>
-                  {num}
-                </option>
-              ))}
-            </select>
+              onIncrease={() => setSelected((prev) => prev + 1)}
+              onDecrease={() => setSelected((prev) => Math.max(1, prev - 1))}
+            />
             <div className="product-page-btn-container">
               <Button
                 variant={isSame ? "disabled" : "primary"}
@@ -76,7 +73,10 @@ function Product() {
               </Button>
               {cartProduct && (
                 <Button
-                  onClick={() => (removeFromCart(product.id), setSelected(1))}
+                  onClick={() => {
+                    removeFromCart(product.id);
+                    setSelected(1);
+                  }}
                   variant="remove"
                 ></Button>
               )}

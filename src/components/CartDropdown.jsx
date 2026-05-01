@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 import "./CartDropdown.css";
 import Button from "./ui/Button";
 import { Trash2 } from "lucide-react";
+import NumberInput from "./ui/NumberInput";
 
 function CartDropdown() {
-  const { cart, clearCart, removeFromCart } = useCart();
-  const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+  const { cart, clearCart, removeFromCart, addToCart } = useCart();
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
 
   return (
     <div className="cart-container">
@@ -19,8 +24,13 @@ function CartDropdown() {
               <img src={product.image} alt={product.name} />
             </Link>
             <p className="cart-item-name">{product.name}</p>
-            <p>{product.price} kr</p>
-            <p>{product.quantity}</p>
+            <p>{product.price * product.quantity} kr</p>
+            {/* <p>{product.quantity}</p> */}
+            <NumberInput
+              value={product.quantity}
+              onIncrease={() => addToCart(product, product.quantity + 1)}
+              onDecrease={() => addToCart(product, product.quantity - 1)}
+            />
             <Button
               style={{ marginRight: 10 }}
               onClick={() => removeFromCart(product.id)}
