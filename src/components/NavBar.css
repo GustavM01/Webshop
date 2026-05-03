@@ -91,7 +91,8 @@
   top: 70px;
   right: 20px;
 
-  width: 380px;
+  margin-left: 20px;
+  max-width: 380px;
   max-height: 550px;
 
   background: white;

@@ -31,7 +31,7 @@ function CartDropdown() {
               onDecrease={() => addToCart(product, product.quantity - 1)}
             />
             <Button
-              style={{ marginRight: 10 }}
+              style={{ marginRight: 5 }}
               onClick={() => removeFromCart(product.id)}
               variant="remove"
             />
@@ -47,9 +47,11 @@ function CartDropdown() {
           <p>Total items</p>
           <p style={{ fontWeight: 700 }}>{totalItems}</p>
         </div>
-        <Button style={{ width: "100%", borderRadius: 9 }}>
-          <Link to={"/cart"}>Go to checkout</Link>
-        </Button>
+        <Link to={"/cart"}>
+          <Button style={{ width: "100%", borderRadius: 9 }}>
+            Go to checkout
+          </Button>
+        </Link>
       </div>
     </div>
   );

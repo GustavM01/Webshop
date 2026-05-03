@@ -9,13 +9,13 @@ function Cart() {
   const { cart, clearCart, removeFromCart } = useCart();
   const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
   return (
-    <div style={{ marginInline: 150 }} className="cart-container">
-      <div className="cart-list">
+    <div className="checkout-container">
+      <div className="checkout-list">
         {cart.map((product) => (
-          <div className="cart-item" key={product.id}>
+          <div className="checkout-item" key={product.id}>
             <Link
               style={{ flex: 1 }}
-              className="cart-img"
+              className="checkout-img"
               to={`/product/${product.id}`}
             >
               <img src={product.image} alt={product.name} />
@@ -34,9 +34,11 @@ function Cart() {
             />
           </div>
         ))}
-      </div>
-      <div className="cart-summary">
-        <p>Totalt: {totalPrice} kr</p>
+        <div className="checkout-summary">
+          <p>
+            Totalt <strong>{totalPrice}</strong> kr
+          </p>
+        </div>
       </div>
     </div>
   );

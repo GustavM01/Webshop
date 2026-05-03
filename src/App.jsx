@@ -13,7 +13,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar setSearchInput={setSearchInput} />
+      <NavBar searchInput={searchInput} setSearchInput={setSearchInput} />
 
       <Routes>
         <Route path="/" element={<Home searchInput={searchInput} />} />

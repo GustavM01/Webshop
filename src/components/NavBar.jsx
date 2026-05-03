@@ -6,7 +6,7 @@ import { useCart } from "../context/CartContext";
 import CartDropdown from "./CartDropdown";
 import { useEffect } from "react";
 
-function NavBar({ setSearchInput }) {
+function NavBar({ setSearchInput, searchInput }) {
   const { cart } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -46,9 +46,9 @@ function NavBar({ setSearchInput }) {
       }
     }
 
-    window.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("click", handleClickOutside);
 
-    return () => window.removeEventListener("mousedown", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
   }, [isCartOpen]);
 
   const handleNavigate = () => {
@@ -57,10 +57,14 @@ function NavBar({ setSearchInput }) {
     }
   };
 
+  const backToHome = () => {
+    setSearchInput("");
+  };
+
   return (
     <div className="navbar">
       <div className="nav-container">
-        <Link to="/" className="logo">
+        <Link onClick={backToHome} to="/" className="logo">
           Webshop
         </Link>
         <div className="navbar-right">
@@ -69,6 +73,7 @@ function NavBar({ setSearchInput }) {
             className="search-bar"
             type="text"
             onKeyDown={handleNavigate}
+            value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
           <button
