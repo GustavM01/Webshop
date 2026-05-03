@@ -25,7 +25,6 @@ function CartDropdown() {
             </Link>
             <p className="cart-item-name">{product.name}</p>
             <p>{product.price * product.quantity} kr</p>
-            {/* <p>{product.quantity}</p> */}
             <NumberInput
               value={product.quantity}
               onIncrease={() => addToCart(product, product.quantity + 1)}
@@ -48,7 +47,9 @@ function CartDropdown() {
           <p>Total items</p>
           <p style={{ fontWeight: 700 }}>{totalItems}</p>
         </div>
-        <Button>Go to checkout</Button>
+        <Button style={{ width: "100%", borderRadius: 9 }}>
+          <Link to={"/cart"}>Go to checkout</Link>
+        </Button>
       </div>
     </div>
   );
