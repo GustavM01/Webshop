@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 import "./NavBar.css";
 import { ShoppingCart } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartDropdown from "./CartDropdown";
 import { useEffect } from "react";
 
-function NavBar() {
+function NavBar({ setSearchInput }) {
   const { cart } = useCart();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -14,6 +14,7 @@ function NavBar() {
 
   const [shouldScale, setShouldScale] = useState(false);
 
+  const navigate = useNavigate();
   const location = useLocation();
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -50,6 +51,12 @@ function NavBar() {
     return () => window.removeEventListener("mousedown", handleClickOutside);
   }, [isCartOpen]);
 
+  const handleNavigate = () => {
+    if (location.pathname != "/") {
+      navigate("/");
+    }
+  };
+
   return (
     <div className="navbar">
       <div className="nav-container">
@@ -57,7 +64,13 @@ function NavBar() {
           Webshop
         </Link>
         <div className="navbar-right">
-          <input placeholder="Search" className="search-bar" type="text" />
+          <input
+            placeholder="Search"
+            className="search-bar"
+            type="text"
+            onKeyDown={handleNavigate}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
           <button
             ref={buttonRef}
             onClick={() => setIsCartOpen((prev) => !prev)}

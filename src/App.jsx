@@ -9,12 +9,14 @@ import { ProductProvider } from "./context/ProductContext";
 import { CartProvider } from "./context/CartContext";
 
 function App() {
+  const [searchInput, setSearchInput] = useState("");
+
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar setSearchInput={setSearchInput} />
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home searchInput={searchInput} />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<Product />} />
       </Routes>
