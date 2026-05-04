@@ -1,10 +1,13 @@
 import { ProductProvider } from "../context/ProductContext";
 import { CartProvider } from "../context/CartContext";
+import { AuthProvider } from "../context/AuthContext";
 
 export default function AppProviders({ children }) {
   return (
-    <ProductProvider>
-      <CartProvider>{children}</CartProvider>
-    </ProductProvider>
+    <AuthProvider>
+      <ProductProvider>
+        <CartProvider>{children}</CartProvider>
+      </ProductProvider>
+    </AuthProvider>
   );
 }

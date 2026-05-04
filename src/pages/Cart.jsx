@@ -1,13 +1,38 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import "./Cart.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import NumberInput from "../components/ui/NumberInput";
 
 function Cart() {
-  const { cart, clearCart, removeFromCart } = useCart();
-  const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+  const { cart, clearCart, removeFromCart, addToCart } = useCart();
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
+
+  const handleCheckout = async () => {
+    const res = await fetch(
+      "http://127.0.0.1:5001/webshop-dev-43378/us-central1/checkout",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ cart }),
+      },
+    );
+
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    }
+
+    // console.log(data);
+  };
+
   return (
     <div className="checkout-container">
       <div className="checkout-list">
@@ -38,6 +63,7 @@ function Cart() {
           <p>
             Totalt <strong>{totalPrice}</strong> kr
           </p>
+          <Button onClick={handleCheckout}>Go to checkout</Button>
         </div>
       </div>
     </div>

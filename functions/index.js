@@ -1,0 +1,66 @@
+/**
+ * Import function triggers from their respective submodules:
+ *
+ * const {onCall} = require("firebase-functions/v2/https");
+ * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
+ *
+ * See a full list of supported triggers at https://firebase.google.com/docs/functions
+ */
+
+const { setGlobalOptions } = require("firebase-functions");
+const { onRequest } = require("firebase-functions/https");
+const { defineSecret } = require("firebase-functions/params");
+const logger = require("firebase-functions/logger");
+
+const STRIPE_SECRET = defineSecret("STRIPE_SECRET");
+
+const Stripe = require("stripe");
+
+exports.checkout = onRequest({ secrets: [STRIPE_SECRET] }, async (req, res) => {
+  const stripe = new Stripe(STRIPE_SECRET.value());
+
+  const cart = req.body.cart;
+  console.log("TEST");
+  const line_items = cart.map((items) => ({
+    price_data: {
+      currency: "sek",
+      product_data: {
+        name: items.name,
+        images: [items.image],
+      },
+      unit_amount: items.price * 100,
+    },
+    quantity: items.quantity,
+  }));
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card", "klarna"],
+    mode: "payment",
+    line_items,
+    success_url: "http://localhost:5173/success",
+    cancel_url: "http://localhost:5173/cart",
+  });
+
+  res.json({ url: session.url });
+  //   res.json({ message: "Hello world", received: line_items });
+});
+
+// For cost control, you can set the maximum number of containers that can be
+// running at the same time. This helps mitigate the impact of unexpected
+// traffic spikes by instead downgrading performance. This limit is a
+// per-function limit. You can override the limit for each function using the
+// `maxInstances` option in the function's options, e.g.
+// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
+// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
+// functions should each use functions.runWith({ maxInstances: 10 }) instead.
+// In the v1 API, each function can only serve one request per container, so
+// this will be the maximum concurrent request count.
+setGlobalOptions({ maxInstances: 10 });
+
+// Create and deploy your first functions
+// https://firebase.google.com/docs/functions/get-started
+
+// exports.helloWorld = onRequest((request, response) => {
+//   logger.info("Hello logs!", {structuredData: true});
+//   response.send("Hello from Firebase!");
+// });

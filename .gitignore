@@ -27,3 +27,6 @@ dist-ssr
 .env*
 
 nodeConfig.js
+
+functions/node_modules
+functions/.env

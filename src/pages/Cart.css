@@ -49,6 +49,7 @@
 .checkout-summary {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   background: white;
   border-radius: var(--radius);
   height: 70px;
@@ -59,4 +60,8 @@
 
 .checkout-summary p {
   margin-left: 20px;
+}
+
+.checkout-summary button {
+  margin-right: 20px;
 }
