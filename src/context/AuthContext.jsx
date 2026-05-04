@@ -14,37 +14,30 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const adminEmail = "gustav.martensson01@gmail.com";
-
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const token = await user.getIdTokenResult();
+
+        if (token.claims.admin) {
+          setUser(user);
+        } else {
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
+
       setLoading(false);
     });
-  }, [auth]);
+  }, []);
 
-  const logIn = async () => {
-    try {
-      signInWithPopup(auth, provider).then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        if (result.user.email !== adminEmail) {
-          logOut();
-          throw new Error("Not authorized");
-        }
-      });
-    } catch (err) {
-      console.log(err.message);
-      throw err;
-    }
+  const logIn = () => {
+    return signInWithPopup(auth, provider);
   };
 
-  const logOut = async () => {
-    signOut(auth)
-      .then(() => {})
-      .catch((error) => {
-        console.log(error);
-      });
+  const logOut = () => {
+    return signOut(auth);
   };
 
   return (

@@ -28,5 +28,8 @@ dist-ssr
 
 nodeConfig.js
 
+serviceAccountKey.json
+setAdmin.cjs
+
 functions/node_modules
 functions/.env
