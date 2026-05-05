@@ -2,9 +2,17 @@ import React from "react";
 import "./Button.css";
 import { Loader2, Trash2 } from "lucide-react";
 
-function Button({ children, onClick, style, loading, variant = "primary" }) {
+function Button({
+  disabled = false,
+  children,
+  onClick,
+  style,
+  loading,
+  variant = "primary",
+}) {
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       style={style}
       className={

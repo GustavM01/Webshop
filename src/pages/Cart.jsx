@@ -12,6 +12,11 @@ function Cart() {
     0,
   );
 
+  const cartInfo = cart.map(({ id, quantity }) => ({
+    id,
+    quantity,
+  }));
+
   const handleCheckout = async () => {
     const res = await fetch(
       "http://127.0.0.1:5001/webshop-dev-43378/us-central1/checkout",
@@ -20,7 +25,7 @@ function Cart() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ cart }),
+        body: JSON.stringify({ cartInfo }),
       },
     );
 
@@ -29,8 +34,6 @@ function Cart() {
     if (data.url) {
       window.location.href = data.url;
     }
-
-    // console.log(data);
   };
 
   return (
@@ -63,7 +66,9 @@ function Cart() {
           <p>
             Totalt <strong>{totalPrice}</strong> kr
           </p>
-          <Button onClick={handleCheckout}>Go to checkout</Button>
+          <Button disabled={cart.length === 0} onClick={handleCheckout}>
+            Go to checkout
+          </Button>
         </div>
       </div>
     </div>

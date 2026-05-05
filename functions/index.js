@@ -1,66 +1,72 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+import { setGlobalOptions } from "firebase-functions";
+import { onRequest } from "firebase-functions/https";
+import { defineSecret } from "firebase-functions/params";
+import admin from "firebase-admin";
+// import logger from "firebase-functions/logger";
 
-const { setGlobalOptions } = require("firebase-functions");
-const { onRequest } = require("firebase-functions/https");
-const { defineSecret } = require("firebase-functions/params");
-const logger = require("firebase-functions/logger");
+admin.initializeApp();
+const db = admin.firestore();
 
 const STRIPE_SECRET = defineSecret("STRIPE_SECRET");
 
-const Stripe = require("stripe");
+import Stripe from "stripe";
 
-exports.checkout = onRequest({ secrets: [STRIPE_SECRET] }, async (req, res) => {
-  const stripe = new Stripe(STRIPE_SECRET.value());
+export const checkout = onRequest(
+  { secrets: [STRIPE_SECRET] },
+  async (req, res) => {
+    const stripe = new Stripe(STRIPE_SECRET.value());
+    const cart = req.body.cartInfo;
 
-  const cart = req.body.cart;
-  console.log("TEST");
-  const line_items = cart.map((items) => ({
-    price_data: {
-      currency: "sek",
-      product_data: {
-        name: items.name,
-        images: [items.image],
-      },
-      unit_amount: items.price * 100,
-    },
-    quantity: items.quantity,
-  }));
+    if (!Array.isArray(cart)) {
+      return res.status(400).json({ error: "Invalid cart format" });
+    }
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ["card", "klarna"],
-    mode: "payment",
-    line_items,
-    success_url: "http://localhost:5173/success",
-    cancel_url: "http://localhost:5173/cart",
-  });
+    if (cart.length === 0) {
+      return res.status(400).json({ error: "Cart is empty" });
+    }
 
-  res.json({ url: session.url });
-  //   res.json({ message: "Hello world", received: line_items });
-});
+    const line_items = await Promise.all(
+      cart.map(async (item) => {
+        const doc = await db.collection("products").doc(item.id).get();
 
-// For cost control, you can set the maximum number of containers that can be
-// running at the same time. This helps mitigate the impact of unexpected
-// traffic spikes by instead downgrading performance. This limit is a
-// per-function limit. You can override the limit for each function using the
-// `maxInstances` option in the function's options, e.g.
-// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
-// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
-// functions should each use functions.runWith({ maxInstances: 10 }) instead.
-// In the v1 API, each function can only serve one request per container, so
-// this will be the maximum concurrent request count.
+        if (!doc.exists) {
+          throw new Error("Product not found");
+        }
+
+        if (item.quantity <= 0 || item.quantity > 10) {
+          throw new Error("Invalid quantity");
+        }
+
+        const product = doc.data();
+
+        if (!product.price) {
+          throw new Error("Invalid product data");
+        }
+
+        return {
+          price_data: {
+            currency: "sek",
+            product_data: {
+              name: product.name,
+              images: [product.image],
+            },
+            unit_amount: product.price * 100,
+          },
+          quantity: item.quantity,
+        };
+      }),
+    );
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card", "klarna"],
+      mode: "payment",
+      line_items,
+      success_url: "http://localhost:5173/success",
+      cancel_url: "http://localhost:5173/cart",
+    });
+
+    res.json({ url: session.url });
+  },
+);
+
 setGlobalOptions({ maxInstances: 10 });
-
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
-
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
