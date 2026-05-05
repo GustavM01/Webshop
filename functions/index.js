@@ -8,6 +8,7 @@ admin.initializeApp();
 const db = admin.firestore();
 
 const STRIPE_SECRET = defineSecret("STRIPE_SECRET");
+const STRIPE_WEBHOOK_SECRET = defineSecret("STRIPE_WEBHOOK_SECRET");
 
 import Stripe from "stripe";
 
@@ -66,6 +67,55 @@ export const checkout = onRequest(
     });
 
     res.json({ url: session.url });
+  },
+);
+
+export const stripeWebhook = onRequest(
+  { secrets: [STRIPE_SECRET, STRIPE_WEBHOOK_SECRET] },
+  async (req, res) => {
+    const stripe = new Stripe(STRIPE_SECRET.value());
+
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(
+        req.rawBody,
+        req.headers["stripe-signature"],
+        STRIPE_WEBHOOK_SECRET.value(),
+      );
+    } catch (err) {
+      console.error("Webhook signature verification failed.", err.message);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type !== "checkout.session.completed") {
+      return res.sendStatus(200);
+    }
+
+    console.log("Verified event:", event.type);
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+
+      const cart = JSON.parse(session.metadata.cart);
+
+      await db
+        .collection("orders")
+        .doc(session.id)
+        .set({
+          sessionId: session.id,
+          items: cart,
+          amount: session.amount_total,
+          currency: session.currency,
+          email: session.customer_details?.email || null,
+          status: "paid",
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        });
+
+      console.log("Order saved!");
+    }
+
+    res.sendStatus(200);
   },
 );
 
