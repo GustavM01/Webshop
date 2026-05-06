@@ -30,9 +30,11 @@ function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute>
-              <Admin />
-            </ProtectedRoute>
+            <OrderProvider>
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            </OrderProvider>
           }
         />
       </Routes>
