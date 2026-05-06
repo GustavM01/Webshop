@@ -113,7 +113,9 @@ export const checkout = onRequest(
       status: "pending",
       stripeSessionId: session.id,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      expiresAt: Date.now() + 1000 * 60 * 30,
+      expiresAt: admin.firestore.Timestamp.fromDate(
+        new Date(Date.now() + 1000 * 60 * 30),
+      ),
     });
 
     res.json({ url: session.url });

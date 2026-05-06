@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
 import "./Cart.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -7,6 +7,8 @@ import NumberInput from "../components/ui/NumberInput";
 
 function Cart() {
   const { cart, clearCart, removeFromCart, addToCart } = useCart();
+  const [loading, setLoading] = useState(false);
+
   const totalPrice = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
@@ -18,21 +20,32 @@ function Cart() {
   }));
 
   const handleCheckout = async () => {
-    const res = await fetch(
-      "http://127.0.0.1:5001/webshop-dev-43378/us-central1/checkout",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+    if (loading) return;
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        "http://127.0.0.1:5001/webshop-dev-43378/us-central1/checkout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ cartInfo }),
         },
-        body: JSON.stringify({ cartInfo }),
-      },
-    );
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.url) {
+      if (!data.url) {
+        throw new Error("No checkout URL returned");
+      }
+
       window.location.href = data.url;
+    } catch (err) {
+      console.error("Checkout failed:", err);
+      setLoading(false);
     }
   };
 
@@ -66,7 +79,11 @@ function Cart() {
           <p>
             Totalt <strong>{totalPrice}</strong> kr
           </p>
-          <Button disabled={cart.length === 0} onClick={handleCheckout}>
+          <Button
+            disabled={cart.length === 0 || loading}
+            onClick={handleCheckout}
+            variant={loading ? "disabled" : "primary"}
+          >
             Go to checkout
           </Button>
         </div>
