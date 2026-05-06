@@ -162,25 +162,46 @@ export const stripeWebhook = onRequest(
 
     const orderData = orderSnap.data();
 
-    if (session.amount_total !== orderData.totalAmount * 100) {
-      console.error("Amount mismatch!");
-      return res.sendStatus(400);
-    }
-
     if (orderData.status === "paid") {
       console.log("Order already processed");
       return res.sendStatus(200);
     }
 
-    await orderRef.update({
+    const customer = session.customer_details;
+
+    const address =
+      customer?.address ?? session.shipping_details?.address ?? null;
+
+    const updateData = {
       status: "paid",
+      createdBy: "guest", // UserID senare
       stripeSessionId: session.id,
       amount: session.amount_total,
       currency: session.currency,
-      email: session.customer_details?.email || null,
-      shippingAddress: session.shipping_details,
-    });
 
+      customer: {
+        email: customer?.email || null,
+        name: customer?.name || null,
+        phone: customer?.phone || null,
+      },
+    };
+
+    if (address) {
+      updateData.shippingAddress = {
+        name: customer?.name || null,
+        line1: address.line1 || null,
+        line2: address.line2 || null,
+        city: address.city || null,
+        postalCode: address.postal_code || null,
+        state: address.state || null,
+        country: address.country || null,
+      };
+    }
+
+    await orderRef.update(updateData);
+
+    console.log("Shipping details: ", session.shipping_details);
+    console.log("Customer details: ", session.customer_details);
     console.log("Order saved!");
 
     res.sendStatus(200);

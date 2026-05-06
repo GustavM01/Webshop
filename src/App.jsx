@@ -10,6 +10,7 @@ import { CartProvider } from "./context/CartContext";
 import Admin from "./pages/admin/Admin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Success from "./pages/Success";
+import { OrderProvider } from "./context/OrderContext";
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
