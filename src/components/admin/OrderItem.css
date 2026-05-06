@@ -1,0 +1,18 @@
+.admin-order-item-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.admin-order-item-container {
+  flex: 1;
+  text-align: center;
+  border-bottom: 1px solid gray;
+  margin: 0;
+  padding-block: 12px;
+}
+
+.admin-order-item-container > * {
+  flex: 1;
+}

@@ -5,7 +5,7 @@ import {
   collection,
   addDoc,
 } from "firebase/firestore";
-import { products } from "../src/data/seedProducts.js";
+import { products, orders } from "../src/data/seedProducts.js";
 
 const app = initializeApp({
   apiKey: "fake-key",
@@ -21,6 +21,12 @@ async function seed() {
 
   for (const product of products) {
     await addDoc(ref, product);
+  }
+
+  const orderRef = collection(db, "orders");
+
+  for (const order of orders) {
+    await addDoc(orderRef, order);
   }
 
   console.log("Seed klart!");

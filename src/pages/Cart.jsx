@@ -84,7 +84,7 @@ function Cart() {
             onClick={handleCheckout}
             variant={loading ? "disabled" : "primary"}
           >
-            Go to checkout
+            {loading ? "Redirecting..." : "Go to checkout"}
           </Button>
         </div>
       </div>
