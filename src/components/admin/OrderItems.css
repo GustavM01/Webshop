@@ -1,0 +1,33 @@
+.order-item-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.order-item-picture img {
+  border-radius: 8px;
+}
+
+.order-item-picture img {
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.order-item-number {
+  margin-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+.order-item-number p {
+  margin: 0;
+  line-height: 0.8;
+}

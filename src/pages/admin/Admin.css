@@ -1,33 +1,55 @@
-.admin-container {
+.admin-page-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
 }
 
-.admin-navbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.admin-container {
+  width: calc(100vw - 210px);
 }
 
 .admin-order-list {
-  margin-inline: 50px;
-  /* display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: space-between; */
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  margin: 20px;
+  background: white;
 }
 
-.admin-order-list > div {
-  flex: 1;
-  text-align: center;
-  border-bottom: 1px solid gray;
-  margin: 0;
-  padding-block: 12px;
+.admin-order-row-top {
+  height: 50px;
 }
 
-.admin-order-list-header {
+.admin-order-row {
   display: flex;
   flex-direction: row;
-  font-weight: 650;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  padding-inline: 15px 12px;
+  gap: 15px;
+  height: 70px;
+}
+
+.admin-order-row > div {
+  flex: 1;
+}
+
+.admin-order-row-header {
+  border-top: 1px solid lightgray;
+  border-radius: 7px 7px 0 0;
+  background-color: var(--bg-main);
+  font-weight: 600;
+}
+
+.admin-order-row-footer {
+  height: 50px;
+}
+
+.admin-order-row > div > p {
+  margin: 5px;
+}
+
+.admin-order-checkbox {
+  scale: 1.2;
 }

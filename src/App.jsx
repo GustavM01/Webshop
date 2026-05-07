@@ -11,6 +11,7 @@ import Admin from "./pages/admin/Admin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Success from "./pages/Success";
 import { OrderProvider } from "./context/OrderContext";
+import AdminLayout from "./components/admin/layout/AdminLayout";
 
 function App() {
   const [searchInput, setSearchInput] = useState("");

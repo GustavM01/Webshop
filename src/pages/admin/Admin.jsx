@@ -4,8 +4,9 @@ import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useOrders } from "../../context/OrderContext";
-import OrderItem from "../../components/admin/OrderItem";
+import OrderItem from "../../components/admin/OrderRow";
 import "./Admin.css";
+import AdminLayout from "../../components/admin/layout/AdminLayout";
 
 function Admin() {
   const { logIn, logOut, user, loading: authLoading } = useAuth();
@@ -17,24 +18,51 @@ function Admin() {
   if (!user) return <button onClick={logIn}>Login</button>;
   console.log(orders);
   return (
-    <div className="admin-container">
-      <div className="admin-navbar">
-        <h1>{user.displayName}</h1>
-        <button onClick={logOut}>Logout</button>
-      </div>
-      <div className="admin-order-list">
-        <div className="admin-order-item-container admin-order-list-header">
-          <p style={{ width: "fit-content", flex: 0, marginInline: "10px" }}>
-            #
-          </p>
-          <p>Status</p>
-          <p>ID</p>
-          <p>Name</p>
-          <p>Email</p>
+    <div className="admin-page-container">
+      <AdminLayout />
+      <div className="admin-container">
+        {/* <div className="admin-navbar"></div> */}
+        <div style={{ marginLeft: 40 }}>
+          <h2 style={{ marginBlock: 10 }}>Orders</h2>
+          <p style={{ margin: 0 }}>Manage and track all customer orders.</p>
         </div>
-        {orders.map((order, index) => (
-          <OrderItem key={order.id} number={index} order={order} />
-        ))}
+        <div className="admin-order-list">
+          <div
+            style={{ margin: 10 }}
+            className="admin-order-row-top flex-start"
+          >
+            <input placeholder="Search orders..." type="text" />
+          </div>
+          <div className="admin-order-row admin-order-row-header">
+            <div style={{ flex: 0.1 }}>
+              <input className="admin-order-checkbox" type="checkbox" />
+            </div>
+            <div style={{ flex: 1.2 }}>
+              <p>Customer</p>
+            </div>
+            <div style={{ flex: 0.75 }}>
+              <p>Date</p>
+            </div>
+            <div>
+              <p>Status</p>
+            </div>
+            <div style={{ flex: 1.2 }}>
+              <p>Items</p>
+            </div>
+            <div style={{ flex: 0.8 }}>
+              <p>Total</p>
+            </div>
+            <div style={{ flex: 0.2 }}></div>
+          </div>
+          {orders.slice(0, 8).map((order, index) => (
+            <OrderItem key={order.id} order={order} />
+          ))}
+          <div className="admin-order-row-footer">
+            <p style={{ marginLeft: 15 }}>
+              Showing 1-8 out of {orders.length} orders
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
