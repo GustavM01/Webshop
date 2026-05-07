@@ -189,39 +189,91 @@ function OrderInfo({ order, setSelected }) {
               </div>
               {/* <EditBtn onClick={() => setEditing((prev) => (prev = !prev))} /> */}
             </div>
-            <div className="info-tab-row">
-              {editing ? (
-                <input
-                  placeholder="Adress line 1"
-                  value={editValues.shippingAddress.line1}
-                  onChange={(e) =>
-                    setEditValues((prev) => ({
-                      ...prev,
-                      shippingAddress: {
-                        ...prev.shippingAddress,
-                        line1: e.target.value,
-                      },
-                    }))
-                  }
-                />
-              ) : (
-                <p
-                  className={editValues.shippingAddress.line1 === "" && "label"}
-                >
-                  {order.shippingAddress?.line1 || "No Shipping address"}
-                </p>
-              )}
-            </div>
-            {order.shippingAddress && (
+            {editing ? (
               <>
                 <div className="info-tab-row">
-                  <p>{order.shippingAddress?.postalCode}</p>
-                  <p>{order.shippingAddress?.city}</p>
+                  <input
+                    placeholder="Line 1"
+                    value={editValues.shippingAddress.line1 || ""}
+                    onChange={(e) =>
+                      setEditValues((prev) => ({
+                        ...prev,
+                        shippingAddress: {
+                          ...prev.shippingAddress,
+                          line1: e.target.value,
+                        },
+                      }))
+                    }
+                  />
                 </div>
+
                 <div className="info-tab-row">
-                  <p>{order.shippingAddress?.country}</p>
+                  <input
+                    placeholder="Postal code"
+                    value={editValues.shippingAddress.postalCode || ""}
+                    onChange={(e) =>
+                      setEditValues((prev) => ({
+                        ...prev,
+                        shippingAddress: {
+                          ...prev.shippingAddress,
+                          postalCode: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+
+                  <input
+                    placeholder="City"
+                    value={editValues.shippingAddress.city || ""}
+                    onChange={(e) =>
+                      setEditValues((prev) => ({
+                        ...prev,
+                        shippingAddress: {
+                          ...prev.shippingAddress,
+                          city: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+                </div>
+
+                <div className="info-tab-row">
+                  <input
+                    placeholder="Country"
+                    value={editValues.shippingAddress.country || ""}
+                    onChange={(e) =>
+                      setEditValues((prev) => ({
+                        ...prev,
+                        shippingAddress: {
+                          ...prev.shippingAddress,
+                          country: e.target.value,
+                        },
+                      }))
+                    }
+                  />
                 </div>
               </>
+            ) : order.shippingAddress ? (
+              <>
+                <div className="info-tab-row">
+                  <p>{order.shippingAddress.line1}</p>
+                </div>
+
+                <div className="info-tab-row">
+                  <p>
+                    {order.shippingAddress.postalCode}{" "}
+                    {order.shippingAddress.city}
+                  </p>
+                </div>
+
+                <div className="info-tab-row">
+                  <p>{order.shippingAddress.country}</p>
+                </div>
+              </>
+            ) : (
+              <div className="info-tab-row">
+                <p className="label">No shipping address</p>
+              </div>
             )}
           </div>
 
@@ -255,7 +307,7 @@ function OrderInfo({ order, setSelected }) {
                   : "No payment"}
               </p>
             </div>
-            {order.currency && (
+            {order.currency && order.amount && (
               <div className="info-tab-row flex-start-end">
                 <p className="label">Currency</p>
                 <p style={{ textTransform: "uppercase" }} className="label">
@@ -285,12 +337,25 @@ function OrderInfo({ order, setSelected }) {
           <div className="info-tab-item-summary">
             <div className="flex-start-end">
               <p>Subtotal</p>
-              <p>{order.totalAmount + " SEK"}</p>
+              <p>
+                {order.totalAmount.toLocaleString("sv-SE", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                }) + " SEK"}
+              </p>
             </div>
             {order.amount && (
               <div className="flex-start-end">
                 <p>Shipping</p>
-                <p>{order.amount / 100 - order.totalAmount + " SEK"}</p>
+                <p>
+                  {(order.amount / 100 - order.totalAmount).toLocaleString(
+                    "sv-SE",
+                    {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    },
+                  ) + " SEK"}
+                </p>
               </div>
             )}
             <div
@@ -300,8 +365,14 @@ function OrderInfo({ order, setSelected }) {
               <p style={{ color: "black", fontWeight: 500 }}>Total</p>
               <p style={{ color: "black", fontWeight: 500 }}>
                 {order.amount
-                  ? order.amount / 100 + " SEK"
-                  : order.totalAmount + " SEK"}
+                  ? (order.amount / 100).toLocaleString("sv-SE", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }) + " SEK"
+                  : order.totalAmount.toLocaleString("sv-SE", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }) + " SEK"}
               </p>
             </div>
           </div>
