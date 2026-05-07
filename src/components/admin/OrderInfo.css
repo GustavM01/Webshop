@@ -1,0 +1,66 @@
+.order-info-container {
+  padding: 10px;
+}
+
+.order-info-container h3 {
+  margin: 10px;
+}
+
+.info-tab-btn {
+  padding: 8px 5px;
+  border: none;
+  background: transparent;
+  font-weight: 550;
+  font-size: 15px;
+  color: rgb(144, 143, 156);
+  transition: all 0.2s ease;
+}
+
+.info-tab-btn:hover {
+  color: black;
+}
+
+.active {
+  border-bottom: 2px solid black;
+  color: black;
+  scale: 1.05;
+}
+
+.active:hover {
+  border-bottom: 2px solid black;
+}
+
+.order-info-top {
+  border-bottom: 1px solid var(--bg-secondary);
+}
+
+.tab-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border-bottom: 1px solid var(--bg-secondary); */
+}
+
+.order-info-section {
+  padding: 10px;
+  border-bottom: 1px solid var(--bg-secondary);
+}
+
+.info-tab-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.info-tab-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  /* margin-bottom: 10px; */
+}
+
+.info-tab-row > p {
+  margin-block: 7px;
+}

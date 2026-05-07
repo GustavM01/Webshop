@@ -1,0 +1,16 @@
+.edit-btn {
+  padding: 5px 10px;
+  border: 1px solid var(--bg-secondary);
+  border-radius: 8px;
+  background: rgb(255, 255, 255);
+  box-shadow: 1px 1px 1px lightgray;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.edit-btn:hover {
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-hover);
+
+  /* background: white; */
+}

@@ -4,7 +4,7 @@ import StatusBadge from "./StatusBadge";
 import OrderItems from "./OrderItems";
 import { ChevronRight } from "lucide-react";
 
-function OrderItem({ order }) {
+function OrderRow({ order }) {
   return (
     <div className="admin-order-row">
       <div style={{ flex: 0.1 }}>
@@ -22,6 +22,12 @@ function OrderItem({ order }) {
             year: "numeric",
           })}
         </p>
+        <p>
+          {order.createdAt.toDate().toLocaleTimeString("sv-SE", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </p>
       </div>
       <StatusBadge status={order.status} />
       <div style={{ flex: 1.2 }}>
@@ -37,4 +43,4 @@ function OrderItem({ order }) {
   );
 }
 
-export default OrderItem;
+export default OrderRow;

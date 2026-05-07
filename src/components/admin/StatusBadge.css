@@ -2,13 +2,14 @@
   display: flex;
 }
 
-.badge-container > * {
-  border-radius: 15px;
+.badge-container > p {
+  border-radius: 12px;
   width: 50%;
   min-width: fit-content;
-  padding: 5px;
+  padding: 8px;
   text-align: center;
   text-transform: capitalize;
+  line-height: 0.8;
 }
 
 .pending {

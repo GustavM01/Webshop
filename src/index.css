@@ -42,3 +42,15 @@ a {
   display: flex;
   align-items: center;
 }
+
+.center-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
