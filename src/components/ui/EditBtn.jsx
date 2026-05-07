@@ -1,8 +1,12 @@
 import React from "react";
 import "./EditBtn.css";
 
-function EditBtn() {
-  return <button className="edit-btn">Edit</button>;
+function EditBtn({ onClick, editing }) {
+  return (
+    <button onClick={onClick} className="edit-btn">
+      {!editing ? "Edit" : "Cancel"}
+    </button>
+  );
 }
 
 export default EditBtn;

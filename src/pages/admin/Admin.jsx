@@ -58,16 +58,13 @@ function Admin() {
               <div style={{ flex: 0.2 }}></div>
             </div>
             {orders.slice(0, 8).map((order, index) => (
-              <div
-                key={index}
-                className="order-row"
-                onClick={() => {
-                  selectedOrder != order
-                    ? setSelectedOrder(order)
-                    : setSelectedOrder(null);
-                }}
-              >
-                <OrderRow key={order.id} order={order} />
+              <div key={index} className="order-row">
+                <OrderRow
+                  setData={setSelectedOrder}
+                  data={selectedOrder}
+                  key={order.id}
+                  order={order}
+                />
               </div>
             ))}
             <div className="admin-order-row-footer">
@@ -78,7 +75,7 @@ function Admin() {
           </div>
           {selectedOrder && (
             <div className="order-side-info">
-              <OrderInfo order={selectedOrder} />
+              <OrderInfo order={selectedOrder} setSelected={setSelectedOrder} />
             </div>
           )}
         </div>

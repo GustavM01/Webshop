@@ -43,6 +43,12 @@ a {
   align-items: center;
 }
 
+.flex-start-end {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .center-div {
   display: flex;
   justify-content: center;
@@ -53,4 +59,13 @@ a {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.label {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.flex-1 > * {
+  flex: 1;
 }

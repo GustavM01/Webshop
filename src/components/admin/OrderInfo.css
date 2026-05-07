@@ -6,14 +6,25 @@
   margin: 10px;
 }
 
+.order-info-close {
+  margin: 10px;
+  transition: all 0.2s ease;
+}
+
+.order-info-close:hover {
+  cursor: pointer;
+  color: rgb(208, 90, 69);
+  transform: rotate(90deg);
+}
+
 .info-tab-btn {
   padding: 8px 5px;
-  border: none;
+  border: transparent;
   background: transparent;
   font-weight: 550;
   font-size: 15px;
-  color: rgb(144, 143, 156);
-  transition: all 0.2s ease;
+  color: var(--text-secondary);
+  transition: all 0.4s ease;
 }
 
 .info-tab-btn:hover {
@@ -24,6 +35,7 @@
   border-bottom: 2px solid black;
   color: black;
   scale: 1.05;
+  font-weight: 550;
 }
 
 .active:hover {
@@ -61,6 +73,51 @@
   /* margin-bottom: 10px; */
 }
 
-.info-tab-row > p {
-  margin-block: 7px;
+.info-tab-row > p,
+.info-tab-row > input {
+  margin-block: 5px;
+}
+
+.info-tab-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 15px 10px;
+  border-bottom: 1px solid var(--bg-secondary);
+  gap: 10px;
+}
+
+.info-tab-item img {
+  height: 80px;
+  width: 80px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.info-tab-box {
+  width: 100%;
+}
+
+.info-tab-box p {
+  margin: 7px;
+}
+
+.info-tab-price {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.info-tab-item-summary {
+  margin-top: 10px;
+}
+
+.info-tab-item-summary p {
+  color: var(--text-secondary);
+  margin: 5px;
+}
+
+.info-tab-item-summary .total {
+  border-top: 1px solid var(--bg-secondary);
 }

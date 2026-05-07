@@ -55,10 +55,10 @@
   scale: 1.2;
 }
 
-.order-row:hover {
+/* .order-row:hover {
   cursor: pointer;
   opacity: 0.7;
-}
+} */
 
 .admin-order-list-container {
   display: flex;
@@ -71,4 +71,5 @@
   margin: 20px 20px 20px 0;
   background: white;
   min-width: 400px;
+  height: fit-content;
 }
