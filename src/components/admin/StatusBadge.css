@@ -2,7 +2,8 @@
   display: flex;
 }
 
-.badge-container > p {
+.badge-container > p,
+.badge-container > select {
   border-radius: 12px;
   width: 50%;
   min-width: fit-content;
@@ -11,6 +12,12 @@
   text-transform: capitalize;
   line-height: 0.8;
   margin: 0px;
+}
+
+.badge-container > select {
+  border: none;
+  padding: 5px 1px;
+  font-size: 16px;
 }
 
 .pending {

@@ -8,14 +8,27 @@ import OrderRow from "../../components/admin/OrderRow";
 import "./Admin.css";
 import AdminLayout from "../../components/admin/layout/AdminLayout";
 import OrderInfo from "../../components/admin/OrderInfo";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function Admin() {
   const { logIn, logOut, user, loading: authLoading } = useAuth();
   const { orders, loading: ordersLoading } = useOrders();
 
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [pages, setPages] = useState(Math.ceil(orders.length / 8));
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const pages = Math.ceil(orders.length / 8);
+
   const navigate = useNavigate();
+
+  const splitOrders = [];
+
+  for (let i = 0; i < orders.length; i += 8) {
+    splitOrders.push(orders.slice(i, i + 8));
+  }
+
+  console.log("Curernt ", currentPage);
+  console.log("Split pages length ", splitOrders.length);
 
   if (authLoading) return <p>Loading...</p>;
 
@@ -58,7 +71,7 @@ function Admin() {
               </div>
               <div style={{ flex: 0.2 }}></div>
             </div>
-            {orders.slice(0, 8).map((order, index) => (
+            {splitOrders[currentPage]?.map((order, index) => (
               <div key={index} className="order-row">
                 <OrderRow
                   setData={setSelectedOrder}
@@ -68,10 +81,29 @@ function Admin() {
                 />
               </div>
             ))}
-            <div className="admin-order-row-footer">
-              <p style={{ marginLeft: 15 }}>
-                Showing 1-8 out of {orders.length} orders
+            <div className="admin-order-row-footer flex-start-end">
+              <p>
+                Showing {currentPage}-8 out of {orders.length} orders
               </p>
+              <div className="flex-row page-selector">
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => (prev != 0 ? prev - 1 : prev))
+                  }
+                >
+                  <ChevronLeft strokeWidth={1.5} />
+                </button>
+                <p>{currentPage}</p>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) =>
+                      prev < splitOrders.length - 1 ? prev + 1 : prev,
+                    )
+                  }
+                >
+                  <ChevronRight strokeWidth={1.5} />
+                </button>
+              </div>
             </div>
           </div>
           {selectedOrder && (

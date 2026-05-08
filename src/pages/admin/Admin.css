@@ -45,7 +45,8 @@
 }
 
 .admin-order-row-footer {
-  height: 50px;
+  height: 60px;
+  margin-inline: 20px;
 }
 
 .admin-order-row > div > p {
@@ -73,4 +74,43 @@
   background: white;
   min-width: 400px;
   height: fit-content;
+}
+
+.page-selector {
+  gap: 5px;
+}
+
+:root {
+  --page-selector-size: 31px;
+}
+
+.page-selector p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: var(--page-selector-size);
+  height: var(--page-selector-size);
+  /* border: 1px solid lightgray; */
+  color: white;
+  border-radius: 5px;
+  background: var(--accent-hover);
+}
+
+.page-selector button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: var(--page-selector-size);
+  height: var(--page-selector-size);
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.page-selector button:hover {
+  background: var(--bg-secondary);
+  cursor: pointer;
 }

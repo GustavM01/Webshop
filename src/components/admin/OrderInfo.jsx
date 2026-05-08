@@ -207,7 +207,6 @@ function OrderInfo({ order, setSelected }) {
                 <Truck />
                 <p style={{ fontWeight: 600 }}>Shipping address</p>
               </div>
-              {/* <EditBtn onClick={() => setEditing((prev) => (prev = !prev))} /> */}
             </div>
             {editing ? (
               <>
@@ -306,7 +305,6 @@ function OrderInfo({ order, setSelected }) {
                 <Wallet />
                 <p style={{ fontWeight: 600 }}>Payment</p>
               </div>
-              {/* <EditBtn onClick={() => setEditing((prev) => (prev = !prev))} /> */}
             </div>
             <div className="info-tab-row flex-start-end">
               <p>Payment status</p>
@@ -314,6 +312,7 @@ function OrderInfo({ order, setSelected }) {
               <StatusBadge
                 style={{ width: "fit-content", margin: 0 }}
                 status={order.status}
+                edit={editing}
               />
             </div>
             <div className="info-tab-row flex-start-end">
