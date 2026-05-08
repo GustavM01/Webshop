@@ -14,6 +14,7 @@ function Admin() {
   const { orders, loading: ordersLoading } = useOrders();
 
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [pages, setPages] = useState(Math.ceil(orders.length / 8));
   const navigate = useNavigate();
 
   if (authLoading) return <p>Loading...</p>;

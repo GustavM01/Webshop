@@ -41,6 +41,7 @@
   border-radius: 7px 7px 0 0;
   background-color: var(--bg-main);
   font-weight: 600;
+  height: 50px;
 }
 
 .admin-order-row-footer {

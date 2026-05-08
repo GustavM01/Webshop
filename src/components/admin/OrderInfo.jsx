@@ -4,6 +4,7 @@ import StatusBadge from "./StatusBadge";
 import { Truck, User, Wallet, X } from "lucide-react";
 import EditBtn from "../ui/EditBtn";
 import { useOrders } from "../../context/OrderContext";
+import Button from "../ui/Button";
 
 function OrderInfo({ order, setSelected }) {
   const { updateOrder } = useOrders();
@@ -45,14 +46,22 @@ function OrderInfo({ order, setSelected }) {
 
   console.log(editValues);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const cleanedUpdates = {
       customer: {
         name: editValues.customer.name || null,
-        email: editValues.customer.email || null, // OSV fortsätt
+        email: editValues.customer.email || null,
         phone: editValues.customer.phone || null,
       },
+      shippingAddress: {
+        line1: editValues.shippingAddress?.line1 || null,
+        postalCode: editValues.shippingAddress?.postalCode || null,
+        city: editValues.shippingAddress?.city || null,
+        country: editValues.shippingAddress?.country || null,
+      },
     };
+    await updateOrder(order.id, cleanedUpdates);
+    setEditing(false);
   };
 
   return (
@@ -112,10 +121,21 @@ function OrderInfo({ order, setSelected }) {
                 <User />
                 <p style={{ fontWeight: 600 }}>Customer</p>
               </div>
-              <EditBtn
-                editing={editing}
-                onClick={() => setEditing((prev) => !prev)}
-              />
+              <div>
+                {editing && (
+                  <button
+                    onClick={handleSave}
+                    className="edit-btn"
+                    style={{ marginRight: 8 }}
+                  >
+                    Save
+                  </button>
+                )}
+                <EditBtn
+                  editing={editing}
+                  onClick={() => setEditing((prev) => !prev)}
+                />
+              </div>
             </div>
             <div className="info-tab-row">
               {editing ? (
@@ -133,7 +153,7 @@ function OrderInfo({ order, setSelected }) {
                   }
                 />
               ) : (
-                <p>{order.customer?.name || "No name"}</p>
+                <p>{editValues.customer?.name || "No name"}</p>
               )}
             </div>
             {editing ? (
@@ -154,7 +174,7 @@ function OrderInfo({ order, setSelected }) {
               <>
                 {order.customer?.phone && (
                   <div className="info-tab-row">
-                    <p>{order.customer.phone}</p>
+                    <p>{editValues.customer.phone}</p>
                   </div>
                 )}
               </>
@@ -176,7 +196,7 @@ function OrderInfo({ order, setSelected }) {
                   }
                 />
               ) : (
-                <p>{order.customer?.email || "No email"}</p>
+                <p>{editValues.customer?.email || "No email"}</p>
               )}
             </div>
           </div>
@@ -256,18 +276,18 @@ function OrderInfo({ order, setSelected }) {
             ) : order.shippingAddress ? (
               <>
                 <div className="info-tab-row">
-                  <p>{order.shippingAddress.line1}</p>
+                  <p>{editValues.shippingAddress.line1}</p>
                 </div>
 
                 <div className="info-tab-row">
                   <p>
-                    {order.shippingAddress.postalCode}{" "}
-                    {order.shippingAddress.city}
+                    {editValues.shippingAddress.postalCode}{" "}
+                    {editValues.shippingAddress.city}
                   </p>
                 </div>
 
                 <div className="info-tab-row">
-                  <p>{order.shippingAddress.country}</p>
+                  <p>{editValues.shippingAddress.country}</p>
                 </div>
               </>
             ) : (
