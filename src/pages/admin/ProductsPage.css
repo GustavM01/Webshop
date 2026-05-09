@@ -1,0 +1,4 @@
+.product-row:hover {
+  background: transparent !important;
+  cursor: default !important;
+}

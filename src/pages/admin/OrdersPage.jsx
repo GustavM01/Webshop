@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useOrders } from "../../context/OrderContext";
 import OrderRow from "../../components/admin/OrderRow";
 import "./OrdersPage.css";
-import AdminLayout from "../../components/admin/layout/AdminLayout";
 import OrderInfo from "../../components/admin/OrderInfo";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -41,7 +40,6 @@ function OrdersPage() {
   console.log(orders);
   return (
     <div className="admin-page-container">
-      {/* <AdminLayout /> */}
       <div className="admin-container">
         <div style={{ marginLeft: 40 }}>
           <h2 style={{ marginBlock: 10 }}>Orders</h2>
@@ -77,13 +75,14 @@ function OrdersPage() {
               <div style={{ flex: 0.2 }}></div>
             </div>
             {splitOrders[currentPage]?.map((order, index) => (
-              <div key={index} className="order-row">
-                <OrderRow
-                  setData={setSelectedOrder}
-                  data={selectedOrder}
-                  key={order.id}
-                  order={order}
-                />
+              <div
+                onClick={() =>
+                  setSelectedOrder((prev) => (prev === order ? null : order))
+                }
+                key={index}
+                className="order-row"
+              >
+                <OrderRow key={order.id} order={order} />
               </div>
             ))}
             <div className="admin-order-row-footer flex-start-end">

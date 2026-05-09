@@ -1,0 +1,13 @@
+.product-action-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  padding: 8px;
+  transition: background 0.2s ease;
+}
+
+.product-action-box:hover {
+  background: var(--bg-secondary);
+}

@@ -4,7 +4,7 @@ import StatusBadge from "./StatusBadge";
 import OrderItems from "./OrderItems";
 import { ChevronRight } from "lucide-react";
 
-function OrderRow({ order, setData, data }) {
+function OrderRow({ order }) {
   return (
     <div className="admin-order-row">
       <div style={{ flex: 0.1 }}>
@@ -37,9 +37,6 @@ function OrderRow({ order, setData, data }) {
         <p>{(order.amount / 100 || order.totalAmount) + " SEK"}</p>
       </div>
       <div
-        onClick={() => {
-          data != order ? setData(order) : setData(null);
-        }}
         style={{
           flex: 0.2,
           display: "flex",

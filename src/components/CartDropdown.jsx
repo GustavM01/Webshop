@@ -41,11 +41,11 @@ function CartDropdown() {
       <div className="cart-summary">
         <div className="cart-summary-container">
           <p>Total</p>
-          <p style={{ fontWeight: 700 }}>{totalPrice} kr</p>
+          <p style={{ fontWeight: 600 }}>{totalPrice} kr</p>
         </div>
         <div className="cart-summary-container">
           <p>Total items</p>
-          <p style={{ fontWeight: 700 }}>{totalItems}</p>
+          <p style={{ fontWeight: 600 }}>{totalItems}</p>
         </div>
         <Link to={"/cart"}>
           <Button style={{ width: "100%", borderRadius: 9 }}>
