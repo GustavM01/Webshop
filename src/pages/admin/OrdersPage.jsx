@@ -5,12 +5,12 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useOrders } from "../../context/OrderContext";
 import OrderRow from "../../components/admin/OrderRow";
-import "./Admin.css";
+import "./OrdersPage.css";
 import AdminLayout from "../../components/admin/layout/AdminLayout";
 import OrderInfo from "../../components/admin/OrderInfo";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-function Admin() {
+function OrdersPage() {
   const { logIn, logOut, user, loading: authLoading } = useAuth();
   const { orders, loading: ordersLoading } = useOrders();
 
@@ -41,7 +41,7 @@ function Admin() {
   console.log(orders);
   return (
     <div className="admin-page-container">
-      <AdminLayout />
+      {/* <AdminLayout /> */}
       <div className="admin-container">
         <div style={{ marginLeft: 40 }}>
           <h2 style={{ marginBlock: 10 }}>Orders</h2>
@@ -122,4 +122,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default OrdersPage;

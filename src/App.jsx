@@ -3,15 +3,22 @@ import "./App.css";
 import Home from "./pages/Home";
 import NavBar from "./components/NavBar";
 import Cart from "./pages/Cart";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+} from "react-router-dom";
 import Product from "./pages/Product";
 import { ProductProvider } from "./context/ProductContext";
 import { CartProvider } from "./context/CartContext";
-import Admin from "./pages/admin/Admin";
+import OrdersPage from "./pages/admin/OrdersPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Success from "./pages/Success";
 import { OrderProvider } from "./context/OrderContext";
 import AdminLayout from "./components/admin/layout/AdminLayout";
+import ProductsPage from "./pages/admin/ProductsPage";
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
@@ -34,11 +41,15 @@ function App() {
           element={
             <OrderProvider>
               <ProtectedRoute>
-                <Admin />
+                <AdminLayout />
               </ProtectedRoute>
             </OrderProvider>
           }
-        />
+        >
+          <Route index element={<Navigate to="orders" replace />} />
+          <Route path="orders" element={<OrdersPage />} />
+          <Route path="products" element={<ProductsPage />} />
+        </Route>
       </Routes>
     </>
   );

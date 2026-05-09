@@ -130,7 +130,7 @@ function OrderInfo({ order, setSelected }) {
               onClick={() => setActiveTab("overview")}
               className={
                 activeTab === "overview"
-                  ? "info-tab-btn active"
+                  ? "info-tab-btn active-tab"
                   : "info-tab-btn"
               }
             >
@@ -139,7 +139,9 @@ function OrderInfo({ order, setSelected }) {
             <button
               onClick={() => setActiveTab("items")}
               className={
-                activeTab === "items" ? "info-tab-btn active" : "info-tab-btn"
+                activeTab === "items"
+                  ? "info-tab-btn active-tab"
+                  : "info-tab-btn"
               }
             >
               Items

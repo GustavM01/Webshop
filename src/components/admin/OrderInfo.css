@@ -31,14 +31,14 @@
   color: black;
 }
 
-.active {
+.active-tab {
   border-bottom: 2px solid black;
   color: black;
   scale: 1.05;
   font-weight: 550;
 }
 
-.active:hover {
+.active-tab:hover {
   border-bottom: 2px solid black;
 }
 
