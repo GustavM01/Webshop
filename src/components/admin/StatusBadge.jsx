@@ -1,13 +1,6 @@
-import React, { useEffect, useState } from "react";
 import "./StatusBadge.css";
 
 function StatusBadge({ status, style, edit, onChange }) {
-  const [selectedValue, setSelectedValue] = useState(status);
-
-  useEffect(() => {
-    setSelectedValue(status);
-  }, [status]);
-
   const statuses = [
     "pending",
     "paid",
@@ -16,6 +9,7 @@ function StatusBadge({ status, style, edit, onChange }) {
     "delivered",
     "cancelled",
   ];
+
   return (
     <>
       {!edit ? (
@@ -25,13 +19,13 @@ function StatusBadge({ status, style, edit, onChange }) {
       ) : (
         <div style={style} className="badge-container">
           <select
-            value={selectedValue}
-            onChange={(e) => setSelectedValue(e.target.value)}
-            className={selectedValue}
+            value={status}
+            onChange={(e) => onChange(e.target.value)}
+            className={status}
             name="statusBadge"
           >
-            {statuses.map((s, index) => (
-              <option key={index} className={s} value={s}>
+            {statuses.map((s) => (
+              <option className={s} key={s} value={s}>
                 {s}
               </option>
             ))}

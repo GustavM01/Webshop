@@ -17,7 +17,12 @@ function Admin() {
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const pages = Math.ceil(orders.length / 8);
+  const ordersPerPage = 8;
+  const pages = Math.ceil(orders.length / ordersPerPage);
+
+  const startOrder = currentPage * ordersPerPage + 1;
+
+  const endOrder = Math.min((currentPage + 1) * ordersPerPage, orders.length);
 
   const navigate = useNavigate();
 
@@ -63,7 +68,7 @@ function Admin() {
               <div>
                 <p>Status</p>
               </div>
-              <div style={{ flex: 1.2 }}>
+              <div style={{ flex: 1 }}>
                 <p>Items</p>
               </div>
               <div style={{ flex: 0.8 }}>
@@ -83,7 +88,7 @@ function Admin() {
             ))}
             <div className="admin-order-row-footer flex-start-end">
               <p>
-                Showing {currentPage}-8 out of {orders.length} orders
+                Showing {startOrder}-{endOrder} out of {orders.length} orders
               </p>
               <div className="flex-row page-selector">
                 <button
@@ -93,7 +98,7 @@ function Admin() {
                 >
                   <ChevronLeft strokeWidth={1.5} />
                 </button>
-                <p>{currentPage}</p>
+                <p>{currentPage + 1}</p>
                 <button
                   onClick={() =>
                     setCurrentPage((prev) =>

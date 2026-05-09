@@ -30,7 +30,7 @@ function OrderRow({ order, setData, data }) {
         </p>
       </div>
       <StatusBadge status={order.status} />
-      <div style={{ flex: 1.2 }}>
+      <div style={{ flex: 1 }}>
         <OrderItems items={order.items} />
       </div>
       <div style={{ flex: 0.8 }}>

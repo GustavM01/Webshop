@@ -23,6 +23,8 @@ function OrderInfo({ order, setSelected }) {
       city: order.shippingAddress?.city || "",
       country: order.shippingAddress?.country || "",
     },
+
+    status: order.status,
   });
 
   useEffect(() => {
@@ -39,6 +41,8 @@ function OrderInfo({ order, setSelected }) {
         city: order.shippingAddress?.city || "",
         country: order.shippingAddress?.country || "",
       },
+
+      status: order.status,
     });
 
     setEditing(false);
@@ -59,9 +63,36 @@ function OrderInfo({ order, setSelected }) {
         city: editValues.shippingAddress?.city || null,
         country: editValues.shippingAddress?.country || null,
       },
+      status: editValues.status,
     };
     await updateOrder(order.id, cleanedUpdates);
     setEditing(false);
+  };
+
+  const resetEditValues = () => {
+    setEditValues({
+      customer: {
+        name: order.customer?.name || "",
+        email: order.customer?.email || "",
+        phone: order.customer?.phone || "",
+      },
+      shippingAddress: {
+        line1: order.shippingAddress?.line1 || "",
+        postalCode: order.shippingAddress?.postalCode || "",
+        city: order.shippingAddress?.city || "",
+        country: order.shippingAddress?.country || "",
+      },
+      status: order.status,
+    });
+  };
+
+  const handleCancel = () => {
+    if (editing) {
+      resetEditValues();
+      setEditing(false);
+    } else {
+      setEditing(true);
+    }
   };
 
   return (
@@ -76,7 +107,10 @@ function OrderInfo({ order, setSelected }) {
           />
         </div>
         <div style={{ gap: 16, marginBottom: "20px" }} className="flex-start">
-          <StatusBadge style={{ width: "fit-content" }} status={order.status} />
+          <StatusBadge
+            style={{ width: "fit-content" }}
+            status={editValues.status}
+          />
           <p style={{ margin: 0 }} className="label">
             {order.createdAt.toDate().toLocaleDateString("sv-SE", {
               day: "numeric",
@@ -131,10 +165,7 @@ function OrderInfo({ order, setSelected }) {
                     Save
                   </button>
                 )}
-                <EditBtn
-                  editing={editing}
-                  onClick={() => setEditing((prev) => !prev)}
-                />
+                <EditBtn editing={editing} onClick={handleCancel} />
               </div>
             </div>
             <div className="info-tab-row">
@@ -311,8 +342,14 @@ function OrderInfo({ order, setSelected }) {
 
               <StatusBadge
                 style={{ width: "fit-content", margin: 0 }}
-                status={order.status}
+                status={editValues.status}
                 edit={editing}
+                onChange={(newStatus) =>
+                  setEditValues((prev) => ({
+                    ...prev,
+                    status: newStatus,
+                  }))
+                }
               />
             </div>
             <div className="info-tab-row flex-start-end">
