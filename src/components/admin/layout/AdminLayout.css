@@ -8,3 +8,36 @@
   background: #0f172a;
   color: #c0c3cb;
 }
+
+.admin-layout-btn-container {
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
+}
+
+.admin-layout-btn-container div {
+  display: flex;
+  align-items: center;
+  margin: 5px 10px;
+  border-radius: 8px;
+}
+
+.admin-layout-btn-container div:hover {
+  /* background: #28324976; */
+  background: #ffffff27;
+}
+
+.admin-layout-btn-container div svg {
+  margin: 10px 12px;
+}
+
+.admin-layout-btn-container button {
+  font-size: 16px;
+  font-weight: 300;
+  color: inherit;
+  border: none;
+  padding: 0;
+  /* margin: 5px; */
+  border-radius: 8px;
+  background: transparent;
+}
