@@ -15,6 +15,7 @@
   margin: 20px;
   background: white;
   width: 100%;
+  height: fit-content;
 }
 
 .admin-order-row-top {
@@ -94,7 +95,7 @@
   /* border: 1px solid lightgray; */
   color: white;
   border-radius: 5px;
-  background: var(--accent-hover);
+  background: var(--accent);
 }
 
 .page-selector button {
@@ -113,4 +114,40 @@
 .page-selector button:hover {
   background: var(--bg-secondary);
   cursor: pointer;
+}
+
+.admin-search-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid lightgray;
+  width: 20%;
+  min-width: 220px;
+  border-radius: 8px;
+  padding: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.admin-search-bar label {
+  display: flex;
+}
+
+.admin-search-bar svg {
+  margin-right: 5px;
+  color: #888;
+}
+
+.admin-search-bar input {
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-family: inherit;
+  height: 100%;
+  width: 100%;
+}
+
+.admin-search-bar input:focus {
+  /* border: 1px solid var(--accent); */
+  outline: none;
 }

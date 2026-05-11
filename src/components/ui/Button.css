@@ -4,8 +4,11 @@
 
   border: none;
 
+  display: flex;
+  justify-content: center;
+
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: all 0.2s ease;
   width: fit-content;
 }
 
@@ -35,8 +38,19 @@
   opacity: 0.7;
 }
 
+.btn-light {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid lightgray;
+  transition: all 0.2s ease;
+}
+
+.btn-light:hover {
+  background: var(--bg-secondary);
+}
+
 .loading-btn {
-  margin-left: 30px;
+  /* margin-left: 30px; */
   opacity: 0.7;
   height: fit-content;
   width: fit-content;

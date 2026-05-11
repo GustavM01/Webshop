@@ -7,7 +7,7 @@ import { useOrders } from "../../context/OrderContext";
 import OrderRow from "../../components/admin/OrderRow";
 import "./OrdersPage.css";
 import OrderInfo from "../../components/admin/OrderInfo";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 
 function OrdersPage() {
   const { logIn, logOut, user, loading: authLoading } = useAuth();
@@ -48,10 +48,19 @@ function OrdersPage() {
         <div className="admin-order-list-container">
           <div className="admin-order-list">
             <div
-              style={{ margin: 10 }}
+              style={{ margin: "10px 13px" }}
               className="admin-order-row-top flex-start"
             >
-              <input placeholder="Search orders..." type="text" />
+              <div className="admin-search-bar">
+                <label htmlFor="searchOrders">
+                  <Search size={20} />
+                </label>
+                <input
+                  placeholder="Search Orders..."
+                  id="searchOrders"
+                  type="text"
+                />
+              </div>
             </div>
             <div className="admin-order-row admin-order-row-header">
               <div style={{ flex: 0.1 }}>

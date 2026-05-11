@@ -6,7 +6,7 @@ function ProductItem({ product }) {
     <div className="product-item">
       <img className="product-item-img" src={product.image} />
       <div className="product-item-text-section">
-        <p>{product.name}</p>
+        <p className="header">{product.name}</p>
         <p className="label" style={{ fontSize: 13 }}>
           ID: {product.id}
         </p>

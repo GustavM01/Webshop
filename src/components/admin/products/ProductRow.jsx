@@ -3,7 +3,7 @@ import "./ProductRow.css";
 import ProductItem from "./ProductItem";
 import ProductActions from "./ui/ProductActions";
 
-function ProductRow({ product }) {
+function ProductRow({ editClick, deleteClick, product }) {
   return (
     <div className="admin-order-row">
       <div style={{ flex: 0.1 }}>
@@ -20,13 +20,10 @@ function ProductRow({ product }) {
         <p>{product?.stock ? product.stock : "Out of stock"}</p>
       </div>
       <div style={{ flex: 0.8 }}>
-        <p>Status</p>
+        <p className={true ? "status-active" : "status-inactive"}>Active</p>
       </div>
       <div style={{ flex: 0.3, minWidth: 80 }}>
-        <ProductActions
-          onEditClick={() => console.log("Edit", product)}
-          onDeleteClick={() => console.log("Delete", product)}
-        />
+        <ProductActions onEditClick={editClick} onDeleteClick={deleteClick} />
       </div>
     </div>
   );

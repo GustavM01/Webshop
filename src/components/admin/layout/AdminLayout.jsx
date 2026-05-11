@@ -6,7 +6,9 @@ import { ClipboardList, Package } from "lucide-react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
 function AdminLayout() {
-  const { user, logOut } = useAuth();
+  const { user, logOut, logIn } = useAuth();
+
+  if (!user) return <button onClick={logIn}>Login</button>;
   return (
     <>
       <div className="admin-page-container">

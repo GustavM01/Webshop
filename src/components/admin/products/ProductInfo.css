@@ -1,0 +1,125 @@
+.product-info-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.product-info-close-btn {
+  margin: 10px;
+  transition: all 0.2s ease;
+}
+
+.product-info-close-btn:hover {
+  cursor: pointer;
+  color: rgb(208, 90, 69);
+  transform: rotate(90deg);
+}
+
+.product-info-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-info-form label {
+  margin-top: 10px;
+}
+
+.product-info-form input {
+  margin-top: 5px;
+}
+
+.form-input {
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-input:focus {
+  border: 1px solid var(--accent);
+  outline: none;
+}
+
+.product-info-form textarea {
+  font-size: 15px;
+  font-family: inherit;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  resize: none;
+  /* height: 80px; */
+  scrollbar-width: thin;
+}
+
+.image-uploader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: dashed 2px lightgray;
+  border-radius: 8px;
+  background: var(--bg-main);
+  padding: 30px;
+}
+
+.image-uploader p {
+  margin: 5px;
+}
+
+.image-uploader:hover {
+  cursor: pointer;
+}
+
+.image-uploader input {
+  display: none;
+}
+
+.image-uploader-edit {
+  display: flex;
+  flex-direction: column;
+  border: dashed 2px lightgray;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-uploader-edit:hover {
+  cursor: pointer;
+}
+
+.image-uploader-edit::after {
+  content: "Change image";
+  color: rgb(225, 225, 225);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.image-uploader-edit:hover::after {
+  opacity: 1;
+}
+
+.image-uploader-edit img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+}
+
+.image-uploader-edit:after:hover {
+  display: flex;
+  background: green;
+}
+
+.image-uploader-edit input {
+  display: none;
+}

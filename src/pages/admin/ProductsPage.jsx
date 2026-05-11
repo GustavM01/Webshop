@@ -4,13 +4,19 @@ import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./ProductsPage.css";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Search } from "lucide-react";
 import { useProducts } from "../../context/ProductContext";
 import ProductRow from "../../components/admin/products/ProductRow";
+import ProductInfo from "../../components/admin/products/ProductInfo";
+import Button from "../../components/ui/Button";
 
 function ProductsPage() {
-  const { products } = useProducts();
+  const { products, addProduct, updateProduct, deleteProduct } = useProducts();
   const navigate = useNavigate();
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [mode, setMode] = useState(null);
+  const [productValues, setProductValues] = useState({});
 
   const [currentPage, setCurrentPage] = useState(0);
   const productsPerPage = 8;
@@ -28,20 +34,67 @@ function ProductsPage() {
   for (let i = 0; i < products.length; i += 8) {
     splitProducts.push(products.slice(i, i + 8));
   }
+
+  const emptyProduct = {
+    name: "",
+    price: "",
+    // stock: 0,
+    description: "",
+    image: "",
+  };
+
+  useEffect(() => {
+    if (mode === "edit") {
+      setProductValues({ ...selectedProduct });
+    } else if (mode === "add") {
+      setProductValues(emptyProduct);
+    }
+  }, [mode, selectedProduct]);
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    if (mode === "edit") {
+      await updateProduct(selectedProduct.id, productValues);
+    }
+
+    setMode(null);
+    setProductValues(emptyProduct);
+  };
+
   return (
     <div className="admin-page-container">
       <div className="admin-container">
         <div style={{ marginLeft: 40 }}>
           <h2 style={{ marginBlock: 10 }}>Products</h2>
           <p style={{ margin: 0 }}>Manage all products.</p>
+          <Button
+            onClick={() => {
+              setSelectedProduct(null);
+              setProductValues(emptyProduct);
+              setMode("add");
+            }}
+            className={"add-product-btn"}
+          >
+            <Plus strokeWidth={1.6} /> Add product
+          </Button>
         </div>
         <div className="admin-order-list-container">
           <div className="admin-order-list">
             <div
-              style={{ margin: 10 }}
+              style={{ margin: "10px 13px" }}
               className="admin-order-row-top flex-start"
             >
-              <input placeholder="Search products..." type="text" />
+              <div className="admin-search-bar">
+                <label htmlFor="searchProducts">
+                  <Search size={20} />
+                </label>
+                <input
+                  placeholder="Search products..."
+                  id="searchProducts"
+                  type="text"
+                />
+              </div>
             </div>
             <div className="admin-order-row admin-order-row-header">
               <div style={{ flex: 0.1 }}>
@@ -63,9 +116,16 @@ function ProductsPage() {
                 <p>Actions</p>
               </div>
             </div>
-            {splitProducts[currentPage]?.map((order, index) => (
+            {splitProducts[currentPage]?.map((product, index) => (
               <div key={index} className="order-row product-row">
-                <ProductRow key={order.id} product={order} />
+                <ProductRow
+                  editClick={() => {
+                    setSelectedProduct(product);
+                    setMode("edit");
+                  }}
+                  key={product.id}
+                  product={product}
+                />
               </div>
             ))}
             <div className="admin-order-row-footer flex-start-end">
@@ -94,6 +154,19 @@ function ProductsPage() {
               </div>
             </div>
           </div>
+          {(mode === "edit" || mode === "add") && (
+            <div className="product-side-info">
+              <ProductInfo
+                setMode={setMode}
+                product={selectedProduct}
+                mode={mode}
+                productValues={productValues}
+                setProductValues={setProductValues}
+                setSelectedProduct={setSelectedProduct}
+                handleSave={handleSave}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

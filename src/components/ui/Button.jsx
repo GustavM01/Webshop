@@ -10,12 +10,15 @@ function Button({
   style,
   loading,
   variant = "primary",
-  to,
+  to = false,
+  className,
+  type = "button",
 }) {
   if (to) {
     return (
       <Link to={to}>
         <button
+          type={type}
           disabled={disabled}
           onClick={onClick}
           style={style}
@@ -34,11 +37,14 @@ function Button({
 
   return (
     <button
+      type={type}
       disabled={disabled}
       onClick={onClick}
       style={style}
       className={
-        loading ? `btn btn-${variant} loading-btn` : `btn btn-${variant}`
+        loading
+          ? `btn btn-${variant} loading-btn ${className}`
+          : `btn btn-${variant} ${className}`
       }
     >
       {variant === "remove" && (
