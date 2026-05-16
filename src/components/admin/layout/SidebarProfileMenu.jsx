@@ -45,9 +45,7 @@ function SidebarProfileMenu({ user, logOut }) {
       {showMenu && (
         <div className="profile-menu-wrapper">
           <div className="flex-row profile-menu-header">
-            <span style={{ background: "lightgray" }}>
-              {user.displayName.charAt(0).toUpperCase()}
-            </span>
+            <span>{user.displayName.charAt(0).toUpperCase()}</span>
             <div>
               <p style={{ fontWeight: 600, fontSize: "14px" }}>
                 {user.displayName}
