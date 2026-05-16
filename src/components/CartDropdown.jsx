@@ -18,6 +18,10 @@ function CartDropdown() {
   return (
     <div className="cart-container">
       <div className="cart-list">
+        {totalItems === 0 && (
+          <p style={{ textAlign: "center" }}>Your cart is empty</p>
+        )}
+
         {cart.map((product) => (
           <div className="cart-item" key={product.id}>
             <Link className="cart-img" to={`/product/${product.id}`}>

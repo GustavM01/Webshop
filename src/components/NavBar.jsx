@@ -46,9 +46,9 @@ function NavBar({ setSearchInput, searchInput }) {
       }
     }
 
-    window.addEventListener("click", handleClickOutside);
+    window.addEventListener("mousedown", handleClickOutside);
 
-    return () => window.removeEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("mousedown", handleClickOutside);
   }, [isCartOpen]);
 
   const handleNavigate = () => {
