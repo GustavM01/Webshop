@@ -1,17 +1,75 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./SidebarProfileMenu.css";
+import { ChevronRight, LogOut, Settings, User } from "lucide-react";
 
-function SidebarProfileMenu() {
+function SidebarProfileMenu({ user, logOut }) {
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!menuRef.current?.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div>
-      <div></div>
-      <div>
-        <p>profile</p>
-        <p>Account settings</p>
+    <div
+      ref={menuRef}
+      onClick={() => setShowMenu((prev) => !prev)}
+      className="side-nav-footer"
+    >
+      <div className="flex-row">
+        <span className="navbar-profile">
+          {user.displayName.charAt(0).toUpperCase()}
+        </span>
+        <div>
+          <p style={{ fontWeight: 600 }}>{user.displayName}</p>
+          <p style={{ color: "#c0c3cb", fontSize: "12px" }}>Admin</p>
+        </div>
       </div>
-      <div>
-        <p>Log out</p>
-      </div>
+      <ChevronRight style={{ marginRight: 8 }} color="#c0c3cb" size={18} />
+      {/* <h3>{user.displayName}</h3>
+            <Button
+              style={{ backgroundColor: "tomato", marginBottom: 30 }}
+              onClick={logOut}
+            >
+              Logout
+            </Button> */}
+      {showMenu && (
+        <div className="profile-menu-wrapper">
+          <div className="flex-row profile-menu-header">
+            <span style={{ background: "lightgray" }}>
+              {user.displayName.charAt(0).toUpperCase()}
+            </span>
+            <div>
+              <p style={{ fontWeight: 600, fontSize: "14px" }}>
+                {user.displayName}
+              </p>
+              <p style={{ color: "gray", fontSize: "13px" }}>Admin</p>
+            </div>
+          </div>
+          <div className="profile-menu-body">
+            <p>
+              <User size={20} /> Profile
+            </p>
+            <p>
+              <Settings size={20} /> Settings
+            </p>
+          </div>
+          <div className="profile-menu-footer">
+            <p onClick={logOut}>
+              <LogOut size={20} /> Log Out
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
