@@ -15,7 +15,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: max(8px, 10px);
+  gap: max(8px, 25px);
   margin: 0px 10px;
   /* padding: 10px; */
   border-radius: var(--radius);
