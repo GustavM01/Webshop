@@ -2,7 +2,7 @@ import React from "react";
 import "./AdminLayout.css";
 import { useAuth } from "../../../context/AuthContext";
 import Button from "../../ui/Button";
-import { ClipboardList, Package } from "lucide-react";
+import { ChevronRight, ClipboardList, Package } from "lucide-react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
 function AdminLayout() {
@@ -29,14 +29,26 @@ function AdminLayout() {
               </NavLink>
             </div>
           </div>
-          <div className="center-div">
-            <h3>{user.displayName}</h3>
+          <div className="side-nav-footer">
+            <div className="flex-row">
+              <span className="navbar-profile">A</span>
+              <div>
+                <p style={{ fontWeight: 600 }}>{user.displayName}</p>
+                <p style={{ color: "#c0c3cb", fontSize: "12px" }}>Admin</p>
+              </div>
+            </div>
+            <ChevronRight
+              style={{ marginRight: 8 }}
+              color="#c0c3cb"
+              size={18}
+            />
+            {/* <h3>{user.displayName}</h3>
             <Button
               style={{ backgroundColor: "tomato", marginBottom: 30 }}
               onClick={logOut}
             >
               Logout
-            </Button>
+            </Button> */}
           </div>
         </div>
         <Outlet />
