@@ -2,6 +2,25 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import "./Home.css";
 import { useProducts } from "../context/ProductContext";
+import { AnimatePresence, easeIn, motion } from "motion/react";
+
+const MotionCard = motion.create(ProductCard);
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      ease: "easeOut",
+    },
+  },
+};
+
+const childVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
 
 function Home({ searchInput }) {
   const { products, loading } = useProducts();
@@ -31,12 +50,6 @@ function Home({ searchInput }) {
     .filter((product) => product.score > 0)
     .sort((a, b) => b.score - a.score);
 
-  // const filteredProducts = products.filter((item) =>
-  //   (item.name + item.description)
-  //     .toLowerCase()
-  //     .includes(searchInput.toLowerCase()),
-  // );
-
   if (filteredProducts.length === 0)
     return (
       <p
@@ -53,11 +66,19 @@ function Home({ searchInput }) {
   return (
     <>
       <div className="container">
-        <div className="products">
+        <motion.div
+          key="initial-load"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="products"
+        >
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <motion.div key={product.id} variants={childVariants}>
+              <ProductCard product={product} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </>
   );

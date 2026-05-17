@@ -87,7 +87,7 @@
 
 .cart-dropdown {
   position: absolute;
-  top: 70px;
+  top: 85px;
   right: 10px;
 
   margin-left: 10px;
@@ -101,7 +101,7 @@
 
   z-index: 1000;
 
-  animation: dropIn 0.3s ease-out;
+  /* animation: dropIn 0.3s ease-out; */
   overflow-y: auto;
   overflow-x: hidden;
   background: var(--bg-main);

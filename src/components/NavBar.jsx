@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartDropdown from "./CartDropdown";
 import { useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 
 function NavBar({ setSearchInput, searchInput }) {
   const { cart } = useCart();
@@ -94,11 +95,19 @@ function NavBar({ setSearchInput, searchInput }) {
           </button>
         </div>
       </div>
-      {isCartOpen && (
-        <div ref={dropdownRef} className="cart-dropdown">
-          <CartDropdown />
-        </div>
-      )}
+      <AnimatePresence>
+        {isCartOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            ref={dropdownRef}
+            className="cart-dropdown"
+          >
+            <CartDropdown />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
