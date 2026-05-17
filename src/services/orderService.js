@@ -1,5 +1,6 @@
 import {
   collection,
+  deleteDoc,
   doc,
   getDocs,
   onSnapshot,
@@ -23,4 +24,9 @@ export function subscribeToOrders(callback) {
 export async function updateOrder(id, updates) {
   const orderRef = doc(db, "orders", id);
   await updateDoc(orderRef, updates);
+}
+
+export async function deleteOrder(id) {
+  const orderRef = doc(db, "orders", id);
+  await deleteDoc(orderRef);
 }

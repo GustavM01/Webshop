@@ -4,8 +4,6 @@ import "./Home.css";
 import { useProducts } from "../context/ProductContext";
 import { AnimatePresence, easeIn, motion } from "motion/react";
 
-const MotionCard = motion.create(ProductCard);
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -74,7 +72,11 @@ function Home({ searchInput }) {
           className="products"
         >
           {filteredProducts.map((product) => (
-            <motion.div key={product.id} variants={childVariants}>
+            <motion.div
+              whileTap={{ y: -3, scale: 0.95 }}
+              key={product.id}
+              variants={childVariants}
+            >
               <ProductCard product={product} />
             </motion.div>
           ))}

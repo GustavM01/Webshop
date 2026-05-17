@@ -5,10 +5,14 @@ import { Truck, User, Wallet, X } from "lucide-react";
 import EditBtn from "../ui/EditBtn";
 import { useOrders } from "../../context/OrderContext";
 import Button from "../ui/Button";
+import DeleteAlert from "./ui/DeleteAlert";
 
 function OrderInfo({ order, setSelected }) {
-  const { updateOrder } = useOrders();
+  const { updateOrder, deleteOrder } = useOrders();
   const [activeTab, setActiveTab] = useState("overview");
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
   const [editing, setEditing] = useState(false);
   const [editValues, setEditValues] = useState({
     customer: {
@@ -48,8 +52,6 @@ function OrderInfo({ order, setSelected }) {
     setEditing(false);
   }, [order]);
 
-  console.log(editValues);
-
   const handleSave = async () => {
     const cleanedUpdates = {
       customer: {
@@ -84,6 +86,16 @@ function OrderInfo({ order, setSelected }) {
       },
       status: order.status,
     });
+  };
+
+  const requestDelete = () => {
+    setShowDeleteAlert(true);
+  };
+
+  const handleDelete = () => {
+    setShowDeleteAlert(false);
+    deleteOrder(order.id);
+    setSelected(null);
   };
 
   const handleCancel = () => {
@@ -159,13 +171,27 @@ function OrderInfo({ order, setSelected }) {
               </div>
               <div>
                 {editing && (
-                  <button
-                    onClick={handleSave}
-                    className="edit-btn"
-                    style={{ marginRight: 8 }}
-                  >
-                    Save
-                  </button>
+                  <>
+                    <button
+                      onClick={handleSave}
+                      className="edit-btn"
+                      style={{ marginRight: 8 }}
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={requestDelete}
+                      className="edit-btn"
+                      style={{ marginRight: 8 }}
+                    >
+                      Delete
+                    </button>
+                    <DeleteAlert
+                      onConfirm={handleDelete}
+                      onCancel={() => setShowDeleteAlert(false)}
+                      isOpen={showDeleteAlert}
+                    />
+                  </>
                 )}
                 <EditBtn editing={editing} onClick={handleCancel} />
               </div>

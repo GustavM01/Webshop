@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import {
   subscribeToOrders,
   updateOrder as updateOrderService,
+  deleteOrder as deleteOrderService,
 } from "../services/orderService";
 
 const OrderContext = createContext();
@@ -23,8 +24,14 @@ export function OrderProvider({ children }) {
     await updateOrderService(id, updates);
   };
 
+  const deleteOrder = async (id) => {
+    await deleteOrderService(id);
+  };
+
   return (
-    <OrderContext.Provider value={{ orders, loading, updateOrder }}>
+    <OrderContext.Provider
+      value={{ orders, loading, updateOrder, deleteOrder }}
+    >
       {children}
     </OrderContext.Provider>
   );

@@ -31,13 +31,10 @@ function OrdersPage() {
     splitOrders.push(orders.slice(i, i + 8));
   }
 
-  console.log("Curernt ", currentPage);
-  console.log("Split pages length ", splitOrders.length);
-
   if (authLoading) return <p>Loading...</p>;
 
   if (!user) return <button onClick={logIn}>Login</button>;
-  console.log(orders);
+
   return (
     <div className="admin-page-container">
       <div className="admin-container">
