@@ -8,6 +8,23 @@ import OrderRow from "../../components/admin/OrderRow";
 import "./OrdersPage.css";
 import OrderInfo from "../../components/admin/OrderInfo";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.04,
+      ease: "easeOut",
+    },
+  },
+};
+
+const childVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0 },
+};
 
 function OrdersPage() {
   const { logIn, logOut, user, loading: authLoading } = useAuth();
@@ -80,17 +97,24 @@ function OrdersPage() {
               </div>
               <div style={{ flex: 0.2 }}></div>
             </div>
-            {splitOrders[currentPage]?.map((order, index) => (
-              <div
-                onClick={() =>
-                  setSelectedOrder((prev) => (prev === order ? null : order))
-                }
-                key={index}
-                className="order-row"
-              >
-                <OrderRow key={order.id} order={order} />
-              </div>
-            ))}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {splitOrders[currentPage]?.map((order, index) => (
+                <motion.div
+                  variants={childVariants}
+                  onClick={() =>
+                    setSelectedOrder((prev) => (prev === order ? null : order))
+                  }
+                  key={index}
+                  className="order-row"
+                >
+                  <OrderRow key={order.id} order={order} />
+                </motion.div>
+              ))}
+            </motion.div>
             <div className="admin-order-row-footer flex-start-end">
               <p>
                 Showing {startOrder}-{endOrder} out of {orders.length} orders
@@ -116,11 +140,22 @@ function OrdersPage() {
               </div>
             </div>
           </div>
-          {selectedOrder && (
-            <div className="order-side-info">
-              <OrderInfo order={selectedOrder} setSelected={setSelectedOrder} />
-            </div>
-          )}
+          <AnimatePresence>
+            {selectedOrder && (
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 40 }}
+                transition={{ duration: 0.2 }}
+                className="order-side-info"
+              >
+                <OrderInfo
+                  order={selectedOrder}
+                  setSelected={setSelectedOrder}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>

@@ -9,6 +9,23 @@ import { useProducts } from "../../context/ProductContext";
 import ProductRow from "../../components/admin/products/ProductRow";
 import ProductInfo from "../../components/admin/products/ProductInfo";
 import Button from "../../components/ui/Button";
+import { AnimatePresence, motion } from "motion/react";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.04,
+      ease: "easeOut",
+    },
+  },
+};
+
+const childVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { opacity: 1, y: 0 },
+};
 
 function ProductsPage() {
   const { products, addProduct, updateProduct, deleteProduct } = useProducts();
@@ -116,18 +133,28 @@ function ProductsPage() {
                 <p>Actions</p>
               </div>
             </div>
-            {splitProducts[currentPage]?.map((product, index) => (
-              <div key={index} className="order-row product-row">
-                <ProductRow
-                  editClick={() => {
-                    setSelectedProduct(product);
-                    setMode("edit");
-                  }}
-                  key={product.id}
-                  product={product}
-                />
-              </div>
-            ))}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {splitProducts[currentPage]?.map((product, index) => (
+                <motion.div
+                  variants={childVariants}
+                  key={index}
+                  className="order-row product-row"
+                >
+                  <ProductRow
+                    editClick={() => {
+                      setSelectedProduct(product);
+                      setMode("edit");
+                    }}
+                    key={product.id}
+                    product={product}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
             <div className="admin-order-row-footer flex-start-end">
               <p>
                 Showing {startProduct}-{endProduct} out of {products.length}{" "}
@@ -154,19 +181,27 @@ function ProductsPage() {
               </div>
             </div>
           </div>
-          {(mode === "edit" || mode === "add") && (
-            <div className="product-side-info">
-              <ProductInfo
-                setMode={setMode}
-                product={selectedProduct}
-                mode={mode}
-                productValues={productValues}
-                setProductValues={setProductValues}
-                setSelectedProduct={setSelectedProduct}
-                handleSave={handleSave}
-              />
-            </div>
-          )}
+          <AnimatePresence>
+            {(mode === "edit" || mode === "add") && (
+              <motion.div
+                initial={{ opacity: 0, x: 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 40 }}
+                transition={{ duration: 0.2 }}
+                className="product-side-info"
+              >
+                <ProductInfo
+                  setMode={setMode}
+                  product={selectedProduct}
+                  mode={mode}
+                  productValues={productValues}
+                  setProductValues={setProductValues}
+                  setSelectedProduct={setSelectedProduct}
+                  handleSave={handleSave}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>
