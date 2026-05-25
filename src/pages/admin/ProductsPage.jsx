@@ -96,7 +96,13 @@ function ProductsPage() {
             <Plus strokeWidth={1.6} /> Add product
           </Button>
         </div>
-        <div className="admin-order-list-container">
+        <div
+          className={
+            mode
+              ? "admin-order-list-container order-selected"
+              : "admin-order-list-container"
+          }
+        >
           <div className="admin-order-list">
             <div
               style={{ margin: "10px 13px" }}
@@ -187,7 +193,7 @@ function ProductsPage() {
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 40 }}
-                transition={{ duration: 0.2 }}
+                transition={{ duration: 0.2, delay: 0.2 }}
                 className="product-side-info"
               >
                 <ProductInfo

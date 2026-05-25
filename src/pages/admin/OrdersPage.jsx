@@ -59,7 +59,13 @@ function OrdersPage() {
           <h2 style={{ marginBlock: 10 }}>Orders</h2>
           <p style={{ margin: 0 }}>Manage and track all customer orders.</p>
         </div>
-        <div className="admin-order-list-container">
+        <div
+          className={
+            selectedOrder
+              ? "admin-order-list-container order-selected"
+              : "admin-order-list-container"
+          }
+        >
           <div className="admin-order-list">
             <div
               style={{ margin: "10px 13px" }}
@@ -145,8 +151,8 @@ function OrdersPage() {
               <motion.div
                 initial={{ opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 40 }}
-                transition={{ duration: 0.2 }}
+                exit={{ opacity: 0, x: 40, transition: { delay: 0 } }}
+                transition={{ duration: 0.2, delay: 0.2 }}
                 className="order-side-info"
               >
                 <OrderInfo
