@@ -3,6 +3,7 @@ import ProductCard from "../components/ProductCard";
 import "./Home.css";
 import { useProducts } from "../context/ProductContext";
 import { AnimatePresence, easeIn, motion } from "motion/react";
+import SkeletonProductCard from "../components/SkeletonProductCard";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -24,7 +25,7 @@ function Home({ searchInput }) {
   const { products, loading } = useProducts();
 
   const getScore = (product, input) => {
-    const words = input.toLowerCase().split(" ");
+    const words = input.toLowerCase().split(" ").filter(Boolean);
     const name = product.name.toLowerCase();
     const description = product.description.toLowerCase();
 
@@ -40,27 +41,30 @@ function Home({ searchInput }) {
     return score;
   };
 
-  const filteredProducts = products
-    .map((product) => ({
-      ...product,
-      score: getScore(product, searchInput),
-    }))
-    .filter((product) => product.score > 0)
-    .sort((a, b) => b.score - a.score);
+  const filteredProducts = searchInput.trim()
+    ? products
+        .map((product) => ({
+          ...product,
+          score: getScore(product, searchInput),
+        }))
+        .filter((product) => product.score > 0)
+        .sort((a, b) => b.score - a.score)
+    : products;
 
-  if (filteredProducts.length === 0)
-    return (
-      <p
-        style={{
-          margin: "0 auto",
-          width: "50%",
-          textAlign: "center",
-          marginTop: "10vh",
-        }}
-      >
-        No items matching your search...
-      </p>
-    );
+  // if (filteredProducts.length === 0)
+  //   return (
+  //     <p
+  //       style={{
+  //         margin: "0 auto",
+  //         width: "50%",
+  //         textAlign: "center",
+  //         marginTop: "10vh",
+  //       }}
+  //     >
+  //       No items matching your search...
+  //     </p>
+  //   );
+
   return (
     <>
       <div className="container">
@@ -71,15 +75,19 @@ function Home({ searchInput }) {
           animate="visible"
           className="products"
         >
-          {filteredProducts.map((product) => (
-            <motion.div
-              whileTap={{ y: -3, scale: 0.95 }}
-              key={product.id}
-              variants={childVariants}
-            >
-              <ProductCard product={product} />
-            </motion.div>
-          ))}
+          {!loading
+            ? filteredProducts.map((product) => (
+                <motion.div
+                  whileTap={{ y: -3, scale: 0.95 }}
+                  key={product.id}
+                  variants={childVariants}
+                >
+                  <ProductCard product={product} />
+                </motion.div>
+              ))
+            : Array.from({ length: 8 }).map((_, index) => (
+                <SkeletonProductCard key={index} />
+              ))}
         </motion.div>
       </div>
     </>
