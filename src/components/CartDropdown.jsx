@@ -28,7 +28,9 @@ function CartDropdown() {
               <img src={product.image} alt={product.name} />
             </Link>
             <p className="cart-item-name">{product.name}</p>
-            <p>{product.price * product.quantity} kr</p>
+            <p className="cart-item-price">
+              {product.price * product.quantity} kr
+            </p>
             <NumberInput
               value={product.quantity}
               onIncrease={() => addToCart(product, product.quantity + 1)}

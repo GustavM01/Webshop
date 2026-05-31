@@ -51,19 +51,19 @@ function Home({ searchInput }) {
         .sort((a, b) => b.score - a.score)
     : products;
 
-  // if (filteredProducts.length === 0)
-  //   return (
-  //     <p
-  //       style={{
-  //         margin: "0 auto",
-  //         width: "50%",
-  //         textAlign: "center",
-  //         marginTop: "10vh",
-  //       }}
-  //     >
-  //       No items matching your search...
-  //     </p>
-  //   );
+  if (!loading && filteredProducts.length === 0)
+    return (
+      <p
+        style={{
+          margin: "0 auto",
+          width: "50%",
+          textAlign: "center",
+          marginTop: "10vh",
+        }}
+      >
+        No items matching your search...
+      </p>
+    );
 
   return (
     <>
@@ -78,7 +78,7 @@ function Home({ searchInput }) {
           {!loading
             ? filteredProducts.map((product) => (
                 <motion.div
-                  whileTap={{ y: -3, scale: 0.95 }}
+                  // whileTap={{ y: -3, scale: 0.95 }}
                   key={product.id}
                   variants={childVariants}
                 >

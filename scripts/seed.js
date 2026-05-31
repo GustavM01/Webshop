@@ -30,6 +30,7 @@ async function seed() {
   }
 
   console.log("Seed klart!");
+  process.exit(0);
 }
 
 seed();

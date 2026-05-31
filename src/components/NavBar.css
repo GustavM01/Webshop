@@ -117,3 +117,17 @@
     transform: translateY(0);
   }
 }
+
+@media (max-width: 480px) {
+  .nav-container {
+    padding-inline: 10px;
+  }
+
+  .cart {
+    margin-left: 10px;
+  }
+
+  .logo {
+    margin-right: 10px;
+  }
+}
